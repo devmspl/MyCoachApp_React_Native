@@ -35,7 +35,7 @@ const LoginScreen = () => {
           <Pressable
             onPress={() => setView(1)}
             style={{
-              backgroundColor: view === 1 ? 'white' : COLORS.grey,
+              backgroundColor: view === 1 ? 'white' : COLORS.lightgrey,
               height: '100%',
               width: '49%',
               alignItems: 'center',
@@ -48,7 +48,7 @@ const LoginScreen = () => {
           <Pressable
             onPress={() => setView(2)}
             style={{
-              backgroundColor: view === 2 ? 'white' : COLORS.grey,
+              backgroundColor: view === 2 ? 'white' : COLORS.lightgrey,
               height: '100%',
               width: '49%',
               alignItems: 'center',
@@ -59,7 +59,7 @@ const LoginScreen = () => {
           </Pressable>
         </View>
 
-        <MyText size={FONT_SIZE['1.5xl']} bold={FONT_WEIGHT.bold}>
+        <MyText size={FONT_SIZE['xl']} bold={FONT_WEIGHT.bold} style={{marginBottom:10}}>
           Welcome Back
         </MyText>
         <MyText size={FONT_SIZE.sm} color={'gray'}>
@@ -70,24 +70,24 @@ const LoginScreen = () => {
           {/* EMAIL */}
           <View style={styles.inputView}>
             <MaterialCommunityIcons
-              name="email"
-              size={20}
-              color={'rgba(0,0,0,0.3)'}
+              name="email-variant"
+              size={22}
+              color={COLORS.darkgrey}
             />
             <TextInput
               style={styles.input}
               placeholder="Email"
-              placeholderTextColor={COLORS.grey}
+              placeholderTextColor={COLORS.darkgrey}
             />
           </View>
 
           {/* Password */}
           <View style={styles.inputView}>
-            <Entypo name="lock" size={20} color={'rgba(0,0,0,0.3)'} />
+            <Entypo name="key" size={20} color={COLORS.darkgrey} />
             <TextInput
               style={styles.input}
               placeholder="Password"
-              placeholderTextColor={COLORS.grey}
+              placeholderTextColor={COLORS.darkgrey}
               secureTextEntry={!isPasswordVisible}
             />
             {/* <Feather
@@ -103,13 +103,13 @@ const LoginScreen = () => {
         <TouchableOpacity
           style={{marginTop: 10}}
           onPress={() => navigation.navigate('ForgotPassword')}>
-          <MyText color={COLORS.primary} size={FONT_SIZE.sm}>
+          <MyText color={COLORS.primary} size={FONT_SIZE.sm} bold={FONT_WEIGHT.bold}>
             I forgot the password
           </MyText>
         </TouchableOpacity>
 
         <View style={{marginTop: 20}}>
-          <PrimaryBtn loading={loading} text={'Log in'} />
+          <PrimaryBtn loading={loading} text={'Log in to your account'} />
         </View>
       </View>
     </MainLayout>
@@ -129,7 +129,7 @@ const styles = StyleSheet.create({
   },
   viewBtn: {
     alignSelf: 'center',
-    backgroundColor: COLORS.grey,
+    backgroundColor: COLORS.lightgrey,
     borderRadius: 5,
     height: 30,
     width: 180,
@@ -143,7 +143,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     borderRadius: 10,
-    backgroundColor: 'white',
+    backgroundColor: COLORS.lightgrey,
     paddingHorizontal: 10,
   },
   input: {

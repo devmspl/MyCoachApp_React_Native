@@ -8,10 +8,12 @@ const globalStyles = {
 };
 
 const COLORS = {
-  primary: '#29715B',
+  primary: '#2D2D2D',
   white: '#fff',
   black: '#222',
   grey: '#D4D4D8',
+  lightgrey: '#F4F4F5',
+  darkgrey: '#A1A1AA',
   blue: '#3141ad',
   lightBlue: '#0096ED',
   bg:'#FAFAFA',

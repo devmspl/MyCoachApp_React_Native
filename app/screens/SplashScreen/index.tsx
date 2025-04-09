@@ -13,8 +13,9 @@ const SplashScreen = () => {
   //     navigation.navigate('Login')
   //   }, 3000)
   // })
+  
   return (
-    <SafeAreaView style={{flex: 1, backgroundColor: COLORS.bg, padding: 20}}>
+    <View style={{flex: 1, backgroundColor: COLORS.bg, padding: 20}}>
       <View style={{flex: 1}}>
         <View style={styles.logoView}></View>
         <View style={{height: 350, width: '100%', alignSelf: 'center'}}>
@@ -44,7 +45,7 @@ const SplashScreen = () => {
       </View>
 
       <PrimaryBtn  text="Let’s Get Started" onPress={() => navigation.navigate('Login')}/>
-    </SafeAreaView>
+    </View>
   );
 };
 
