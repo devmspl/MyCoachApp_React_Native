@@ -7,9 +7,7 @@ import {
 } from 'react-native';
 import React, {useState} from 'react';
 import MainLayout from '../../../components/MainLayout';
-import {
-  MyText,
-} from '../../../components/MyText';
+import {MyText} from '../../../components/MyText';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Entypo from 'react-native-vector-icons/Entypo';
 import {COLORS, FONT_SIZE, FONT_WEIGHT} from '../../../styles';
@@ -18,6 +16,7 @@ import {useNavigation} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {RootStackParams} from '../../../navigation/types';
 import {useDispatch} from 'react-redux';
+import Input from '../../../components/Input';
 
 const LoginScreen = () => {
   const navigation =
@@ -69,49 +68,24 @@ const LoginScreen = () => {
 
         <View>
           {/* EMAIL */}
-          <View
-            style={{
-              marginVertical: 15,
-              flexDirection: 'row',
-              alignItems: 'center',
-              borderRadius: 10,
-              backgroundColor: 'white',
-              paddingHorizontal: 10,
-            }}>
+          <View style={styles.inputView}>
             <MaterialCommunityIcons
               name="email"
               size={20}
               color={'rgba(0,0,0,0.3)'}
             />
             <TextInput
-              style={{
-                height: 45,
-                paddingHorizontal: 10,
-                width: '90%',
-                color: COLORS.black,
-              }}
+              style={styles.input}
               placeholder="Email"
               placeholderTextColor={COLORS.grey}
             />
           </View>
 
           {/* Password */}
-          <View
-            style={{
-              flexDirection: 'row',
-              alignItems: 'center',
-              borderRadius: 10,
-              backgroundColor: 'white',
-              paddingHorizontal: 10,
-            }}>
+          <View style={styles.inputView}>
             <Entypo name="lock" size={20} color={'rgba(0,0,0,0.3)'} />
             <TextInput
-              style={{
-                height: 45,
-                paddingHorizontal: 10,
-                width: '85%',
-                color: COLORS.black,
-              }}
+              style={styles.input}
               placeholder="Password"
               placeholderTextColor={COLORS.grey}
               secureTextEntry={!isPasswordVisible}
@@ -163,5 +137,19 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     padding: 3,
     flexDirection: 'row',
+  },
+  inputView: {
+    marginVertical: 15,
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderRadius: 10,
+    backgroundColor: 'white',
+    paddingHorizontal: 10,
+  },
+  input: {
+    height: 45,
+    paddingHorizontal: 10,
+    width: '90%',
+    color: COLORS.black,
   },
 });
