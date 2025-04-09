@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - main
-      - dev
 
 jobs:
   android-deploy:
@@ -31,11 +30,7 @@ jobs:
 
       - name: 🔐 Decode Keystore
         run: |
-          if [[ "${GITHUB_REF##*/}" == "main" ]]; then
-            echo "${{ secrets.KEYSTORE_FILE }}" | base64 --decode > android/app/my-release-key.keystore
-          else
-            echo "${{ secrets.DEV_KEYSTORE_FILE }}" | base64 --decode > android/app/my-release-key.keystore
-          fi
+          echo "${{ secrets.KEYSTORE_FILE }}" | base64 --decode > android/app/my-release-key.keystore
 
       - name: 🏗️ Build Android AAB
         run: |
@@ -53,12 +48,11 @@ jobs:
           serviceAccountJsonPlainText: ${{ secrets.PLAY_STORE_JSON_KEY }}
           packageName: com.mycoachapp
           releaseFiles: android/app/build/outputs/bundle/release/app-release.aab
-          track: ${{ github.ref == 'refs/heads/main' && 'production' || 'internal' }}
+          track: production
 
   ios-deploy:
     name: 🍏 iOS Build & Deploy
     runs-on: macos-latest
-    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/dev'
 
     steps:
       - name: 📦 Checkout Code
@@ -92,8 +86,6 @@ jobs:
           APP_STORE_CONNECT_KEY_ID: ${{ secrets.APP_STORE_CONNECT_KEY_ID }}
           APP_STORE_CONNECT_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_ISSUER_ID }}
           APP_STORE_CONNECT_KEY_PATH: AuthKey.p8
-          MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
         run: |
           cd ios
           bundle exec fastlane ios beta
-
