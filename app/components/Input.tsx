@@ -30,7 +30,7 @@ const Input = ({
   onBlur,
 }: InputProps) => {
   return (
-    <View style={[{width: '100%'}, inputWrapperStyle, {marginTop: 10}]}>
+    <View style={[{width: '100%'}, inputWrapperStyle, {marginTop: 15}]}>
       <TextInput
         value={value}
         onChangeText={onChangeText}
@@ -41,13 +41,14 @@ const Input = ({
         onBlur={onBlur}
         style={[
           {
-            backgroundColor: COLORS.white,
+            backgroundColor: 'white',
             borderWidth: 1,
-            height: 55,
-            borderRadius: 7,
+            height: 45,
+            borderRadius: 10,
             color: 'black',
             paddingLeft: 12,
-            fontSize: 15,
+            fontSize: 14,
+            borderColor: COLORS.grey,
           },
           inputStyle,
         ]}

@@ -1,6 +1,11 @@
 export type RootStackParams = {
   Splash: undefined;
   OnBoarding: undefined;
+  OnboardingOne: undefined;
+  OnboardingTwo: undefined;
+  OnboardingThree: undefined;
+  OnboardingFour: undefined;
+  OnboardingFive: undefined;
   Welcome: undefined;
   Signup: undefined;
   PrivacyPolicy: undefined;

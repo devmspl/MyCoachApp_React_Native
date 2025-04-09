@@ -19,7 +19,7 @@ const MainLayout = ({children, title, onBack}: Props) => {
     marginTop: 20,
   };
   return (
-    <View style={{flex: 1, backgroundColor: COLORS.bg, paddingTop: 20}}>
+    <View style={{flex: 1, backgroundColor: 'transparent', paddingTop: 20}}>
       <View
         style={[
           {
