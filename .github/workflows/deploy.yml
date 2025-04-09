@@ -1,0 +1,99 @@
+name: Android & iOS CI/CD
+
+on:
+  push:
+    branches:
+      - main
+      - dev
+
+jobs:
+  android-deploy:
+    name: 📱 Android Build & Deploy
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 📦 Checkout Code
+        uses: actions/checkout@v3
+
+      - name: 🔧 Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '23'
+
+      - name: 📥 Install Dependencies
+        run: npm install
+
+      - name: ☕ Set up Java JDK
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: 🔐 Decode Keystore
+        run: |
+          if [[ "${GITHUB_REF##*/}" == "main" ]]; then
+            echo "${{ secrets.KEYSTORE_FILE }}" | base64 --decode > android/app/my-release-key.keystore
+          else
+            echo "${{ secrets.DEV_KEYSTORE_FILE }}" | base64 --decode > android/app/my-release-key.keystore
+          fi
+
+      - name: 🏗️ Build Android AAB
+        run: |
+          cd android
+          ./gradlew bundleRelease --stacktrace
+
+      - name: 🔑 Authenticate with Google Play
+        uses: google-github-actions/auth@v1
+        with:
+          credentials_json: ${{ secrets.PLAY_STORE_JSON_KEY }}
+
+      - name: 🚀 Upload to Play Store
+        uses: r0adkll/upload-google-play@v1
+        with:
+          serviceAccountJsonPlainText: ${{ secrets.PLAY_STORE_JSON_KEY }}
+          packageName: com.mycoachapp
+          releaseFiles: android/app/build/outputs/bundle/release/app-release.aab
+          track: ${{ github.ref == 'refs/heads/main' && 'production' || 'internal' }}
+
+  ios-deploy:
+    name: 🍏 iOS Build & Deploy
+    runs-on: macos-latest
+    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/dev'
+
+    steps:
+      - name: 📦 Checkout Code
+        uses: actions/checkout@v3
+
+      - name: 🔧 Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '23'
+
+      - name: 📥 Install Dependencies
+        run: npm install
+
+      - name: 🍎 Install CocoaPods
+        run: |
+          cd ios
+          pod install
+
+      - name: 💎 Install Bundler & Fastlane
+        run: |
+          sudo gem install bundler
+          bundle install
+          bundle exec fastlane --version
+
+      - name: 🔐 Set Up App Store Connect API Key
+        run: |
+          echo "${{ secrets.APP_STORE_CONNECT_KEY }}" | base64 --decode > AuthKey.p8
+
+      - name: 🚀 Deploy to TestFlight / App Store
+        env:
+          APP_STORE_CONNECT_KEY_ID: ${{ secrets.APP_STORE_CONNECT_KEY_ID }}
+          APP_STORE_CONNECT_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_ISSUER_ID }}
+          APP_STORE_CONNECT_KEY_PATH: AuthKey.p8
+          MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
+        run: |
+          cd ios
+          bundle exec fastlane ios beta
+
