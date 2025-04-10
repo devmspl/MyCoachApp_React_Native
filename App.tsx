@@ -20,10 +20,6 @@ const AppInit = () => {
       const isFirstTimeOpenData = await AsyncStorage.getItem(
         LOCAL_KEYS.IS_FIRST_TIME_OPEN,
       );
-      console.log({
-        localAuthData,
-        isFirstTimeOpenData: !Boolean(isFirstTimeOpenData),
-      });
       if (localAuthData) {
         dispatch(setAuth(localAuthData));
       }

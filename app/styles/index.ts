@@ -18,7 +18,9 @@ const COLORS = {
   lightBlue: '#0096ED',
   lightBg: '#EBFFF4',
   bg:'#FAFAFA',
-  cream:'#F5F2E4'
+  cream:'#F5F2E4',
+  yellow:'#EFBF04',
+  brown:'#643300'
 }
 export { globalStyles, COLORS };
 
@@ -62,6 +64,7 @@ export const FONT_SIZE = {
   xl: wp(5),
   '1.5xl': wp(5.8),
   '2xl': wp(6.8),
+  '2.5xl': wp(7.5),
   '3xl': wp(9),
   '4xl': wp(11),
   '5xl': wp(12.5),
