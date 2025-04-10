@@ -3159,6 +3159,7 @@ __metadata:
     react-redux: ^9.2.0
     react-test-renderer: 19.0.0
     redux-logger: ^3.0.6
+    toggle-switch-react-native: ^3.3.0
     typescript: 5.0.4
     yup: ^1.6.1
   languageName: unknown
@@ -8172,7 +8173,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prop-types@npm:^15.7.2, prop-types@npm:^15.8.1":
+"prop-types@npm:^15.5.7, prop-types@npm:^15.7.2, prop-types@npm:^15.8.1":
   version: 15.8.1
   resolution: "prop-types@npm:15.8.1"
   dependencies:
@@ -9563,6 +9564,17 @@ __metadata:
   dependencies:
     is-number: ^7.0.0
   checksum: f76fa01b3d5be85db6a2a143e24df9f60dd047d151062d0ba3df62953f2f697b16fe5dad9b0ac6191c7efc7b1d9dcaa4b768174b7b29da89d4428e64bc0a20ed
+  languageName: node
+  linkType: hard
+
+"toggle-switch-react-native@npm:^3.3.0":
+  version: 3.3.0
+  resolution: "toggle-switch-react-native@npm:3.3.0"
+  dependencies:
+    prop-types: ^15.5.7
+  peerDependencies:
+    react-native: ">=0.47.1"
+  checksum: 984ec6b72c3f29ce74c66a70c98195b1278a8aeaf412d9b2c407130cf98c461379b34200b5a61356cc140189ea159b325debfe15922d76adec026d8615521989
   languageName: node
   linkType: hard
 

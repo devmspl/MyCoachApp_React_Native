@@ -16,6 +16,7 @@ const COLORS = {
   darkgrey: '#A1A1AA',
   blue: '#3141ad',
   lightBlue: '#0096ED',
+  lightBg: '#EBFFF4',
   bg:'#FAFAFA',
   cream:'#F5F2E4'
 }

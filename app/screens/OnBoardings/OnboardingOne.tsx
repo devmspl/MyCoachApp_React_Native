@@ -35,13 +35,14 @@ const OnboardingOne = () => {
               <View style={styles.btn}></View>
               <View style={styles.btn}></View>
               <View style={styles.btn}></View>
+              <View style={styles.btn}></View>
             </View>
             <AntDesign name="arrowleft" size={1} color="white" />
           </View>
 
           {/* {CONTENT} */}
           <View style={{marginTop: 20}}>
-            <MyText size={FONT_SIZE['1.5xl']} bold={FONT_WEIGHT.bold}>
+            <MyText size={FONT_SIZE['xl']} bold={FONT_WEIGHT.bold}>
               Welcome to My Financial Coach!
             </MyText>
 
@@ -60,7 +61,7 @@ const OnboardingOne = () => {
             <Input placeholder="Your Education Level" />
           </View>
         </View>
-        <PrimaryBtn onPress={() => navigation.navigate('OnboardingThree')} containerStyle={{marginBottom: 20}} text="Next" />
+        <PrimaryBtn onPress={() => navigation.navigate('OnboardingTwo')} containerStyle={{marginBottom: 20}} text="Next" />
       </ScrollView>
     </MainLayout>
   );

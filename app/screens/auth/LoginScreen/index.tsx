@@ -20,6 +20,7 @@ import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {RootStackParams} from '../../../navigation/types';
 import {useDispatch} from 'react-redux';
 import GoogleIcon from '../../../../assets/svg/Google.svg';
+import {setAuth} from '../../../redux/feature/auth/authSlice';
 
 const LoginScreen = () => {
   const navigation =
@@ -29,6 +30,24 @@ const LoginScreen = () => {
   const [isPasswordVisible, setIsPasswordVisible] = React.useState(false);
   const [view, setView] = React.useState(1);
   const [termsAccepted, setTermsAccepted] = React.useState(false);
+
+  const handleGhostLogin = () => {
+    dispatch(
+      setAuth({
+        user: [
+          {
+            name: 'John Doe',
+            email: 'BkV5u@example.com',
+            phone: '1234567890',
+            address: '123 Main St, Anytown, USA',
+          },
+        ],
+        token: '1fdsfdf2fdsggf3sedgsdgdsg3dsgsd3gsdgdfg3',
+      }),
+    );
+
+    navigation.navigate('MainTab');
+  };
 
   return (
     <MainLayout>
@@ -63,6 +82,7 @@ const LoginScreen = () => {
           </Pressable>
         </View>
 
+        {/* {LOGIN} */}
         {view === 1 && (
           <>
             <MyText size={FONT_SIZE['xl']} bold={FONT_WEIGHT.bold}>
@@ -122,11 +142,16 @@ const LoginScreen = () => {
             </TouchableOpacity>
 
             <View style={{marginTop: 20}}>
-              <PrimaryBtn loading={loading} text={'Log in'} />
+              <PrimaryBtn
+                onPress={handleGhostLogin}
+                loading={loading}
+                text={'Log in'}
+              />
             </View>
           </>
         )}
 
+        {/* {SIGN UP} */}
         {view === 2 && (
           <>
             <MyText size={FONT_SIZE['xl']} bold={FONT_WEIGHT.bold}>

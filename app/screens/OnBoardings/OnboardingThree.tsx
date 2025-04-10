@@ -38,14 +38,18 @@ const OnboardingThree = () => {
                 style={[styles.btn, {backgroundColor: COLORS.primary}]}></View>
               <View style={styles.btn}></View>
               <View style={styles.btn}></View>
+              <View style={styles.btn}></View>
             </View>
             <AntDesign name="arrowleft" size={1} color="white" />
           </View>
 
           {/* {CONTENT} */}
           <View style={{marginTop: 20}}>
-            <MyText size={FONT_SIZE['1.5xl']} bold={FONT_WEIGHT.bold}>
-              A Few More Questions Before Quiz!
+            <MyText size={FONT_SIZE['xl']} bold={FONT_WEIGHT.extrabold}>
+              A Few More Questions Before
+            </MyText>
+            <MyText size={FONT_SIZE['xl']} bold={FONT_WEIGHT.extrabold}>
+              Quiz!
             </MyText>
 
             <MyText
@@ -56,13 +60,26 @@ const OnboardingThree = () => {
               recommend more accurately.
             </MyText>
 
-            <Input2 label='Do you have Debts?' placeholder="Pick an answer" />
-            <Input2 label='Do you have Insurance?' placeholder="Pick an answer" />
-            <Input2 label='have you Budgeted before?' placeholder="Pick an answer" />
-            <Input2 label='Which budget method do you prefer?' placeholder="Pick an answer" />
+            <Input2 label="Do you have Debts?" placeholder="Pick an answer" />
+            <Input2
+              label="Do you have Insurance?"
+              placeholder="Pick an answer"
+            />
+            <Input2
+              label="have you Budgeted before?"
+              placeholder="Pick an answer"
+            />
+            <Input2
+              label="Which budget method do you prefer?"
+              placeholder="Pick an answer"
+            />
           </View>
         </View>
-        <PrimaryBtn containerStyle={{marginBottom: 20}} text="Move To Quiz" />
+        <PrimaryBtn
+          onPress={() => navigation.navigate('OnboardingFour')}
+          containerStyle={{marginBottom: 20}}
+          text="Move To Quiz"
+        />
       </ScrollView>
     </MainLayout>
   );

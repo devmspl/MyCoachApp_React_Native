@@ -139,8 +139,7 @@ brew install watchman
 4. Install Xcode Command Line Tools
 React Native requires some tools that come with Xcode, which includes compilers and other development tools.
 * Install the command line tools by running:
-bash
-Copy
+
 xcode-select --install
 
 * Once installed, make sure everything is set up properly by running:
