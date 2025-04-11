@@ -11,19 +11,20 @@ const COLORS = {
   primary: '#29715B',
   white: '#fff',
   black: '#222',
-  grey: '#D4D4D8',
+  grey: '#E3E3E3',
   lightgrey: '#F4F4F5',
   darkgrey: '#A1A1AA',
   blue: '#3141ad',
   lightBlue: '#0096ED',
   lightBg: '#EBFFF4',
-  bg:'#FAFAFA',
-  cream:'#F5F2E4',
+  bg:'#F0F0F0',
+  cream:'#FFFDD0',
   yellow:'#EFBF04',
-  brown:'#643300'
+  brown:'#643300',
+  lavender:'#A577FF',
+  metalgray:'#3C4142'
 }
 export { globalStyles, COLORS };
-
 
 import {
   widthPercentageToDP as wp,

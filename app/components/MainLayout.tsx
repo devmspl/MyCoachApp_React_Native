@@ -19,25 +19,36 @@ const MainLayout = ({children, title, onBack}: Props) => {
     marginTop: 20,
   };
   return (
-    <View style={{flex: 1, backgroundColor: 'transparent', paddingTop: 20}}>
+    <View style={{flex: 1, backgroundColor: COLORS.bg, paddingTop: 20}}>
       <View
         style={[
           {
             flexDirection: 'row',
             alignItems: 'center',
+            justifyContent: 'space-between',
           },
           onBack ? extraStyle : {},
         ]}>
         {onBack && (
-          <TouchableOpacity onPress={onBack}>
+          <TouchableOpacity
+            style={{
+              height: 40,
+              width: 40,
+              backgroundColor: 'white',
+              borderRadius: 35,
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+            onPress={onBack}>
             <MaterialIcons name="arrow-back" size={25} color={COLORS.black} />
           </TouchableOpacity>
         )}
         <RegularText
           bold
-          style={{marginLeft: 15, color: COLORS.black, fontSize: 20}}>
+          style={{marginLeft: 15, color: COLORS.black, fontSize: 21}}>
           {title}
         </RegularText>
+        <MaterialIcons name="arrow-back" size={20} color={'transparent'} />
       </View>
       {children}
     </View>
