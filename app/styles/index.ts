@@ -8,7 +8,7 @@ const globalStyles = {
 };
 
 const COLORS = {
-  primary: '#29715B',
+  primary: '#00C059',
   white: '#fff',
   black: '#222',
   grey: '#E3E3E3',
@@ -18,7 +18,7 @@ const COLORS = {
   lightBlue: '#0096ED',
   lightBg: '#EBFFF4',
   bg:'#F0F0F0',
-  cream:'#FFFDD0',
+  cream:'#F5F2E4',
   yellow:'#EFBF04',
   brown:'#643300',
   lavender:'#A577FF',

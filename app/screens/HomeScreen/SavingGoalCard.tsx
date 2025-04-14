@@ -7,7 +7,7 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import BlueLogo from '../../../assets/svg/BlueArrow.svg';
 import RedLogo from '../../../assets/svg/RedArrow.svg';
 import * as Progress from 'react-native-progress';
-import Foundation from 'react-native-vector-icons/Foundation'
+import Foundation from 'react-native-vector-icons/Foundation';
 
 const SavingGoalCard = () => {
   const series = [
@@ -38,10 +38,9 @@ const SavingGoalCard = () => {
           </View>
         </View>
         <View>
-          <View
-            style={styles.absoluteView}>
-            <MyText>$25,000/$45,000</MyText> 
-            <Foundation name="flag" size={20} color={COLORS.brown} />
+          <View style={styles.absoluteView}>
+            <MyText color={'white'}>$25,000/$45,000</MyText>
+            <Foundation name="flag" size={20} color={COLORS.yellow} />
           </View>
           <Progress.Bar
             progress={0.5}
@@ -64,10 +63,9 @@ const SavingGoalCard = () => {
           </View>
         </View>
         <View>
-          <View
-            style={styles.absoluteView}>
-            <MyText>$25,000/$45,000</MyText> 
-            <Foundation name="flag" size={20} color={COLORS.brown} />
+          <View style={styles.absoluteView}>
+            <MyText color={'white'}>$25,000/$45,000</MyText>
+            <Foundation name="flag" size={20} color={COLORS.yellow} />
           </View>
           <Progress.Bar
             progress={0.5}
@@ -80,7 +78,6 @@ const SavingGoalCard = () => {
           />
         </View>
       </View>
-
 
       {/* {END} */}
     </View>
@@ -121,7 +118,8 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     padding: 5,
     paddingBottom: 10,
-  },absoluteView:{
+  },
+  absoluteView: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
@@ -129,6 +127,7 @@ const styles = StyleSheet.create({
     zIndex: 1,
     height: 30,
     paddingHorizontal: 10,
-    marginTop: 2,width:'100%'
-  }
+    marginTop: 2,
+    width: '100%',
+  },
 });

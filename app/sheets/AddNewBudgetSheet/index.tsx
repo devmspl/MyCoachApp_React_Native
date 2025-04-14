@@ -58,9 +58,9 @@ const AddNewBudgetSheet = (props: any) => {
             flexDirection: 'row',
             alignItems: 'center',
             justifyContent: 'space-between',
+            marginVertical: 15,
           }}></View>
-
-          
+        <MyText>Pick a Budget Colour</MyText>
       </View>
     </ActionSheet>
   );

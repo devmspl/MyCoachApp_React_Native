@@ -21,6 +21,7 @@ import SavingGoalCard from './SavingGoalCard';
 import Recommendation from './Recommendation';
 import {SheetManager} from 'react-native-actions-sheet';
 import {SHEETS} from '../../sheets/sheets';
+import CardsIcon from '../../../assets/svg/CardsIcon.svg';
 
 const HomeScreen = () => {
   const navigation =
@@ -49,28 +50,35 @@ const HomeScreen = () => {
               </View>
 
               {/* {BALANCE VIEW} */}
-              <MyText
-                style={{alignSelf: 'center', marginTop: 15}}
-                size={FONT_SIZE.sm}>
-                Available balance
-              </MyText>
               <View
                 style={{
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  gap: 10,
-                  alignSelf: 'center',
+                  backgroundColor: COLORS.cream,
+                  paddingVertical: 20,
+                  marginTop: 20,
                 }}>
-                <MyText size={FONT_SIZE['2.5xl']} bold={FONT_WEIGHT.black}>
-                  {isBalanceVisible ? '*********' : '2,145.98.00'}
+                <MyText
+                  style={{alignSelf: 'center', marginTop: 15}}
+                  size={FONT_SIZE.sm}>
+                  Available balance
                 </MyText>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    gap: 10,
+                    alignSelf: 'center',
+                  }}>
+                  <MyText size={FONT_SIZE['2.5xl']} bold={FONT_WEIGHT.black}>
+                    {isBalanceVisible ? '*********' : '2,145.98.00'}
+                  </MyText>
 
-                <MaterialCommunityIcons
-                  onPress={() => setIsBalanceVisible(!isBalanceVisible)}
-                  name={isBalanceVisible ? 'eye-settings' : 'eye-off'}
-                  size={16}
-                  color="black"
-                />
+                  <MaterialCommunityIcons
+                    onPress={() => setIsBalanceVisible(!isBalanceVisible)}
+                    name={isBalanceVisible ? 'eye-settings' : 'eye-off'}
+                    size={16}
+                    color="black"
+                  />
+                </View>
               </View>
 
               {/* {COMPONENTS} */}
@@ -140,6 +148,8 @@ const HomeScreen = () => {
               {/* { SAVING GOALS} */}
               <SavingGoalCard />
               <Recommendation />
+
+             
 
               {/* {END} */}
             </>

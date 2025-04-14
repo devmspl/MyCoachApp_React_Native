@@ -26,8 +26,10 @@ const Recommendation = () => {
           your spending and saving habits.
         </MyText>
         <Pressable style={styles.btn}>
-          <MyText bold={FONT_WEIGHT.semibold} color={'white'}>See recommendations</MyText>
-          <AntDesign name='arrowright' size={20} color={'white'}/>
+          <MyText bold={FONT_WEIGHT.semibold} color={'white'}>
+            See recommendations
+          </MyText>
+          <AntDesign name="arrowright" size={20} color={'white'} />
         </Pressable>
       </View>
     </View>
@@ -56,7 +58,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     borderRadius: 30,
     height: 35,
-    backgroundColor: COLORS.metalgray,
-    width: 220,marginTop:10
+    width: 220,
+    marginTop: 10,
+    backgroundColor: '#00000033',
+    opacity: 0.9,
   },
 });
