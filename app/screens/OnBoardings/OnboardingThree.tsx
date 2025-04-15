@@ -33,9 +33,9 @@ const OnboardingThree = () => {
             />
             <View style={styles.slideView}>
               <View
-                style={[styles.btn, {backgroundColor: COLORS.primary}]}></View>
+                style={[styles.btn, {backgroundColor: COLORS.black}]}></View>
               <View
-                style={[styles.btn, {backgroundColor: COLORS.primary}]}></View>
+                style={[styles.btn, {backgroundColor: COLORS.black}]}></View>
               <View style={styles.btn}></View>
               <View style={styles.btn}></View>
               <View style={styles.btn}></View>

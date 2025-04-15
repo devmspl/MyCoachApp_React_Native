@@ -5,6 +5,7 @@ import {
   StyleSheet,
   Pressable,
   Platform,
+  Text,
 } from 'react-native';
 import React, {useState} from 'react';
 import MainLayout from '../../../components/MainLayout';
@@ -31,7 +32,7 @@ const LoginScreen = () => {
   const [view, setView] = React.useState(1);
   const [termsAccepted, setTermsAccepted] = React.useState(false);
 
-  const handleGhostLogin = () => {
+  const handleLogin = () => {
     dispatch(
       setAuth({
         user: [
@@ -58,27 +59,27 @@ const LoginScreen = () => {
           <Pressable
             onPress={() => setView(1)}
             style={{
-              backgroundColor: view === 1 ? 'white' : COLORS.grey,
+              backgroundColor: view === 1 ? 'white' : COLORS.black,
               height: '100%',
               width: '49%',
               alignItems: 'center',
               justifyContent: 'center',
               borderRadius: 4,
             }}>
-            <MyText size={FONT_SIZE.sm}>Login</MyText>
+            <MyText size={FONT_SIZE.sm} color={view === 1 ? 'black' : 'white'}>Login</MyText>
           </Pressable>
 
           <Pressable
             onPress={() => setView(2)}
             style={{
-              backgroundColor: view === 2 ? 'white' : COLORS.grey,
+              backgroundColor: view === 2 ? 'white' : COLORS.black,
               height: '100%',
               width: '49%',
               alignItems: 'center',
               justifyContent: 'center',
               borderRadius: 4,
             }}>
-            <MyText size={FONT_SIZE.sm}>Sign up</MyText>
+            <MyText size={FONT_SIZE.sm} color={view === 2 ? 'black' : 'white'}>Sign up</MyText>
           </Pressable>
         </View>
 
@@ -88,6 +89,7 @@ const LoginScreen = () => {
             <MyText size={FONT_SIZE['xl']} bold={FONT_WEIGHT.bold}>
               Welcome Back
             </MyText>
+        
             <MyText
               size={FONT_SIZE.sm}
               color={'gray'}
@@ -134,7 +136,7 @@ const LoginScreen = () => {
               // onPress={() => navigation.navigate('ForgotPassword')}
             >
               <MyText
-                color={COLORS.primary}
+                // color={COLORS.primary}
                 size={FONT_SIZE.sm}
                 bold={FONT_WEIGHT.bold}>
                 I forgot the password
@@ -143,9 +145,9 @@ const LoginScreen = () => {
 
             <View style={{marginTop: 20}}>
               <PrimaryBtn
-                onPress={handleGhostLogin}
+                onPress={handleLogin}
                 loading={loading}
-                text={'Log in'}
+                text={'Log in to your account'}
               />
             </View>
           </>
@@ -259,7 +261,7 @@ const styles = StyleSheet.create({
   },
   viewBtn: {
     alignSelf: 'center',
-    backgroundColor: COLORS.grey,
+    backgroundColor: COLORS.black,
     borderRadius: 5,
     height: 30,
     width: 180,
@@ -273,10 +275,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     borderRadius: 10,
-    backgroundColor: COLORS.white,
+    backgroundColor: COLORS.lightgrey,
     paddingHorizontal: 10,
-    borderWidth: 1,
-    borderColor: COLORS.grey,
   },
   input: {
     height: 45,

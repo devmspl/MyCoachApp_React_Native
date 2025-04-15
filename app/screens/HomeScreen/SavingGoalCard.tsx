@@ -46,7 +46,7 @@ const SavingGoalCard = () => {
             progress={0.5}
             width={null}
             color={COLORS.yellow}
-            unfilledColor={COLORS.cream}
+            unfilledColor={COLORS.lightyellow}
             borderColor={'transparent'}
             height={35}
             borderRadius={12}
@@ -71,7 +71,7 @@ const SavingGoalCard = () => {
             progress={0.5}
             width={null}
             color={COLORS.yellow}
-            unfilledColor={COLORS.cream}
+            unfilledColor={COLORS.lightyellow}
             borderColor={'transparent'}
             height={35}
             borderRadius={12}

@@ -22,6 +22,7 @@ import Recommendation from './Recommendation';
 import {SheetManager} from 'react-native-actions-sheet';
 import {SHEETS} from '../../sheets/sheets';
 import CardsIcon from '../../../assets/svg/CardsIcon.svg';
+import {getRandomColor} from '../../utils/helper';
 
 const HomeScreen = () => {
   const navigation =
@@ -120,7 +121,7 @@ const HomeScreen = () => {
                         styles.suggestionView,
                         {
                           backgroundColor:
-                            index === 0 ? 'transparent' : 'black',
+                            index === 0 ? 'transparent' : getRandomColor(),
                           borderWidth: index === 0 ? 1 : 0,
                           borderStyle: index === 0 ? 'dashed' : 'solid',
                           justifyContent: index === 0 ? 'center' : 'flex-start',
@@ -135,7 +136,9 @@ const HomeScreen = () => {
                       ) : (
                         <>
                           <View style={styles.suggestionImg}></View>
-                          <MyText color={'white'}>Food</MyText>
+                          <MyText color={'white'}>
+                            {index % 2 === 1 ? 'Food' : 'Repairs'}
+                          </MyText>
                           <MyText color={'white'}>$190/$400</MyText>
                         </>
                       )}
@@ -148,8 +151,6 @@ const HomeScreen = () => {
               {/* { SAVING GOALS} */}
               <SavingGoalCard />
               <Recommendation />
-
-             
 
               {/* {END} */}
             </>

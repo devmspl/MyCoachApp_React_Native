@@ -78,10 +78,10 @@ const TransactionsScreen = () => {
             onPress={() => setView(1)}
             style={[
               styles.options,
-              {backgroundColor: view === 1 ? 'white' : COLORS.grey},
+              {backgroundColor: view === 1 ? 'white' : COLORS.black},
             ]}>
             <MyText
-              size={FONT_SIZE.sm}
+              size={FONT_SIZE.sm} color={view === 1 ? 'black' : 'white'}
               bold={view === 1 ? FONT_WEIGHT.semibold : FONT_WEIGHT.normal}>
               All
             </MyText>
@@ -91,10 +91,10 @@ const TransactionsScreen = () => {
             onPress={() => setView(2)}
             style={[
               styles.options,
-              {backgroundColor: view === 2 ? 'white' : COLORS.grey},
+              {backgroundColor: view === 2 ? 'white' : COLORS.black},
             ]}>
             <MyText
-              size={FONT_SIZE.sm}
+              size={FONT_SIZE.sm} color={view === 2 ? 'black' : 'white'}
               bold={view === 2 ? FONT_WEIGHT.semibold : FONT_WEIGHT.normal}>
               Expenses
             </MyText>
@@ -103,10 +103,10 @@ const TransactionsScreen = () => {
             onPress={() => setView(3)}
             style={[
               styles.options,
-              {backgroundColor: view === 3 ? 'white' : COLORS.grey},
+              {backgroundColor: view === 3 ? 'white' : COLORS.black},
             ]}>
             <MyText
-              size={FONT_SIZE.sm}
+              size={FONT_SIZE.sm} color={view === 3 ? 'black' : 'white'}
               bold={view === 3 ? FONT_WEIGHT.semibold : FONT_WEIGHT.normal}>
               Income
             </MyText>
@@ -126,13 +126,8 @@ const TransactionsScreen = () => {
 
         {/* Balance Box */}
         <View style={styles.balanceView}>
-          <MyText size={FONT_SIZE.sm} color={'white'}>
-            Total Expenditure
-          </MyText>
-          <MyText
-            bold={FONT_WEIGHT.bold}
-            color={'white'}
-            size={FONT_SIZE['1.5xl']}>
+          <MyText size={FONT_SIZE.sm}>Total Expenditure</MyText>
+          <MyText bold={FONT_WEIGHT.bold} size={FONT_SIZE['1.5xl']}>
             $2,145.98
           </MyText>
         </View>
@@ -184,7 +179,7 @@ const TransactionItem = ({title, subtitle, amount, type}: any) => {
       <View style={{flexDirection: 'row', alignItems: 'center', gap: 10}}>
         {icon}
         <View>
-          <MyText bold={FONT_WEIGHT.semibold}>{title}</MyText>         
+          <MyText bold={FONT_WEIGHT.semibold}>{title}</MyText>
           <MyText size={FONT_SIZE.sm} color="gray">
             {subtitle}
           </MyText>
@@ -201,7 +196,7 @@ const TransactionItem = ({title, subtitle, amount, type}: any) => {
 const styles = StyleSheet.create({
   viewBtn: {
     alignSelf: 'center',
-    backgroundColor: COLORS.grey,
+    backgroundColor: COLORS.black,
     borderRadius: 5,
     height: 33,
     marginBottom: 10,
@@ -222,11 +217,9 @@ const styles = StyleSheet.create({
     gap: 10,
     alignItems: 'center',
     borderRadius: 10,
-    borderWidth: 1,
-    borderColor: COLORS.grey,
     height: 45,
     flex: 1,
-    backgroundColor: 'white',
+    backgroundColor: COLORS.lightgrey,
     paddingHorizontal: 10,
   },
   inputOuter: {
@@ -236,16 +229,18 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   filterBtn: {
-    height: 44,
-    width: 44,
-    borderRadius: 10,
+    height: 40,
+    width: 40,
+    borderRadius: 12,
     backgroundColor: 'white',
     alignItems: 'center',
     justifyContent: 'center',
+    borderWidth: 1,
+    borderColor: COLORS.primary,
   },
   balanceView: {
     borderRadius: 13,
-    backgroundColor: COLORS.primary,
+    backgroundColor: COLORS.cream,
     alignItems: 'center',
     justifyContent: 'center',
     gap: 5,

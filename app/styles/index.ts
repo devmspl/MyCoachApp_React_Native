@@ -20,6 +20,7 @@ const COLORS = {
   bg:'#F0F0F0',
   cream:'#F5F2E4',
   yellow:'#EFBF04',
+  lightyellow:'#FFBE0033',
   brown:'#643300',
   lavender:'#A577FF',
   metalgray:'#3C4142'

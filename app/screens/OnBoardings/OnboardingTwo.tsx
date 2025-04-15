@@ -7,9 +7,7 @@ import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {RootStackParams} from '../../navigation/types';
 import {useNavigation} from '@react-navigation/native';
 import {MyText} from '../../components/MyText';
-import Input from '../../components/Input';
 import PrimaryBtn from '../../components/PrimaryBtn';
-import ToggleSwitch from 'toggle-switch-react-native';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 
 const options = [
@@ -78,7 +76,7 @@ const OnboardingTwo = () => {
             />
             <View style={styles.slideView}>
               <View
-                style={[styles.btn, {backgroundColor: COLORS.primary}]}></View>
+                style={[styles.btn, {backgroundColor: COLORS.black}]}></View>
               <View style={styles.btn}></View>
               <View style={styles.btn}></View>
               <View style={styles.btn}></View>
