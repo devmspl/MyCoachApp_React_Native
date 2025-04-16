@@ -25,7 +25,7 @@ const SavingsScreen = () => {
     <MainLayout onBack={navigation.goBack} title="Savings">
       <FlatList
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={{flex: 1, paddingHorizontal: 0}}
+        contentContainerStyle={{}}
         data={[1]}
         renderItem={() => {
           return (

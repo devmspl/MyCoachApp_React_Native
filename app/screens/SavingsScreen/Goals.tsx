@@ -9,7 +9,7 @@ import Foundation from 'react-native-vector-icons/Foundation';
 
 const Goals = () => {
   return (
-    <View style={{marginHorizontal: 20}}>
+    <View style={{marginHorizontal: 20,}}>
       {/* Balance Box */}
       <View style={styles.balanceView}>
         <MyText size={FONT_SIZE.sm} color={'white'}>
