@@ -31,11 +31,11 @@ const OnboardingFour = () => {
             />
             <View style={styles.slideView}>
               <View
-                style={[styles.btn, {backgroundColor: COLORS.black}]}></View>
+                style={[styles.btn, {backgroundColor: COLORS.primary}]}></View>
               <View
-                style={[styles.btn, {backgroundColor: COLORS.black}]}></View>
+                style={[styles.btn, {backgroundColor: COLORS.primary}]}></View>
               <View
-                style={[styles.btn, {backgroundColor: COLORS.black}]}></View>
+                style={[styles.btn, {backgroundColor: COLORS.primary}]}></View>
               <View style={styles.btn}></View>
               <View style={styles.btn}></View>
             </View>

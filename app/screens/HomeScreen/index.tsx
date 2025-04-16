@@ -53,7 +53,7 @@ const HomeScreen = () => {
               {/* {BALANCE VIEW} */}
               <View
                 style={{
-                  backgroundColor: COLORS.cream,
+                  // backgroundColor: COLORS.cream,
                   paddingVertical: 20,
                   marginTop: 20,
                 }}>

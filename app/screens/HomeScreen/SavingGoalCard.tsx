@@ -39,8 +39,8 @@ const SavingGoalCard = () => {
         </View>
         <View>
           <View style={styles.absoluteView}>
-            <MyText color={'white'}>$25,000/$45,000</MyText>
-            <Foundation name="flag" size={20} color={COLORS.yellow} />
+            <MyText >$25,000/$45,000</MyText>
+            <Foundation name="flag" size={20} color={COLORS.black} />
           </View>
           <Progress.Bar
             progress={0.5}
@@ -64,8 +64,8 @@ const SavingGoalCard = () => {
         </View>
         <View>
           <View style={styles.absoluteView}>
-            <MyText color={'white'}>$25,000/$45,000</MyText>
-            <Foundation name="flag" size={20} color={COLORS.yellow} />
+            <MyText >$25,000/$45,000</MyText>
+            <Foundation name="flag" size={20} color={COLORS.black} />
           </View>
           <Progress.Bar
             progress={0.5}

@@ -23,7 +23,9 @@ const COLORS = {
   lightyellow:'#FFBE0033',
   brown:'#643300',
   lavender:'#A577FF',
-  metalgray:'#3C4142'
+  metalgray:'#3C4142',
+  
+  greenTeal: '#00C059',
 }
 export { globalStyles, COLORS };
 

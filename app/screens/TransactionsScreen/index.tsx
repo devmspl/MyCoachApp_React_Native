@@ -78,10 +78,11 @@ const TransactionsScreen = () => {
             onPress={() => setView(1)}
             style={[
               styles.options,
-              {backgroundColor: view === 1 ? 'white' : COLORS.black},
+              {backgroundColor: view === 1 ? 'white' : COLORS.grey},
             ]}>
             <MyText
-              size={FONT_SIZE.sm} color={view === 1 ? 'black' : 'white'}
+              size={FONT_SIZE.sm}
+              color={'black'}
               bold={view === 1 ? FONT_WEIGHT.semibold : FONT_WEIGHT.normal}>
               All
             </MyText>
@@ -91,10 +92,11 @@ const TransactionsScreen = () => {
             onPress={() => setView(2)}
             style={[
               styles.options,
-              {backgroundColor: view === 2 ? 'white' : COLORS.black},
+              {backgroundColor: view === 2 ? 'white' : COLORS.grey},
             ]}>
             <MyText
-              size={FONT_SIZE.sm} color={view === 2 ? 'black' : 'white'}
+              size={FONT_SIZE.sm}
+              color={'black'}
               bold={view === 2 ? FONT_WEIGHT.semibold : FONT_WEIGHT.normal}>
               Expenses
             </MyText>
@@ -103,10 +105,11 @@ const TransactionsScreen = () => {
             onPress={() => setView(3)}
             style={[
               styles.options,
-              {backgroundColor: view === 3 ? 'white' : COLORS.black},
+              {backgroundColor: view === 3 ? 'white' : COLORS.grey},
             ]}>
             <MyText
-              size={FONT_SIZE.sm} color={view === 3 ? 'black' : 'white'}
+              size={FONT_SIZE.sm}
+              color={'black'}
               bold={view === 3 ? FONT_WEIGHT.semibold : FONT_WEIGHT.normal}>
               Income
             </MyText>
@@ -120,14 +123,14 @@ const TransactionsScreen = () => {
             <TextInput style={{flex: 1}} placeholder="Search here..." />
           </View>
           <Pressable style={styles.filterBtn}>
-            <AntDesign name="filter" size={24} color="gray" />
+            <AntDesign name="filter" size={20} color="gray" />
           </Pressable>
         </View>
 
         {/* Balance Box */}
         <View style={styles.balanceView}>
-          <MyText size={FONT_SIZE.sm}>Total Expenditure</MyText>
-          <MyText bold={FONT_WEIGHT.bold} size={FONT_SIZE['1.5xl']}>
+          <MyText size={FONT_SIZE.sm} color={"white"}>Total Expenditure</MyText>
+          <MyText bold={FONT_WEIGHT.bold} color={"white"} size={FONT_SIZE['1.5xl']}>
             $2,145.98
           </MyText>
         </View>
@@ -179,7 +182,7 @@ const TransactionItem = ({title, subtitle, amount, type}: any) => {
       <View style={{flexDirection: 'row', alignItems: 'center', gap: 10}}>
         {icon}
         <View>
-          <MyText bold={FONT_WEIGHT.semibold}>{title}</MyText>
+          <MyText bold={FONT_WEIGHT.semibold} >{title}</MyText>
           <MyText size={FONT_SIZE.sm} color="gray">
             {subtitle}
           </MyText>
@@ -196,7 +199,7 @@ const TransactionItem = ({title, subtitle, amount, type}: any) => {
 const styles = StyleSheet.create({
   viewBtn: {
     alignSelf: 'center',
-    backgroundColor: COLORS.black,
+    backgroundColor: COLORS.grey,
     borderRadius: 5,
     height: 33,
     marginBottom: 10,
@@ -219,8 +222,9 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     height: 45,
     flex: 1,
-    backgroundColor: COLORS.lightgrey,
-    paddingHorizontal: 10,
+    backgroundColor: COLORS.white,
+    paddingHorizontal: 10,borderWidth:1,
+    borderColor:COLORS.lightgrey
   },
   inputOuter: {
     flexDirection: 'row',
@@ -235,12 +239,10 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     alignItems: 'center',
     justifyContent: 'center',
-    borderWidth: 1,
-    borderColor: COLORS.primary,
   },
   balanceView: {
     borderRadius: 13,
-    backgroundColor: COLORS.cream,
+    backgroundColor: COLORS.primary,
     alignItems: 'center',
     justifyContent: 'center',
     gap: 5,

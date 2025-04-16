@@ -64,20 +64,20 @@ export default CashFlowCard;
 
 const styles = StyleSheet.create({
   card: {
-    backgroundColor: COLORS.cream,
+    // backgroundColor: COLORS.cream,
     padding: 12,
     borderRadius: 15,
-    marginTop: 50,
+    marginTop:20,
     marginBottom: 35,
     marginHorizontal: 20,
   },
   cardDayBtn: {
-    backgroundColor: COLORS.white,
+    backgroundColor: COLORS.yellow,
     flexDirection: 'row',
     gap: 7,
     alignItems: 'center',
     justifyContent: 'center',
-    borderRadius: 50,
+    borderRadius: 10,
     height: 30,
     width: 100,
   },

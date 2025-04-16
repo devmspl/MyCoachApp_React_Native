@@ -1,14 +1,310 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import React from 'react';
+import {
+  View,
+  FlatList,
+  StyleSheet,
+  TouchableOpacity,
+  Text,
+  Image,
+  NativeSyntheticEvent,
+  NativeScrollEvent,
+  TouchableHighlight,
+} from 'react-native';
+import {Video as VideoComponent, VideoRef} from 'react-native-video';
+import {COLORS, DH, DW} from '../../styles';
+
+const videos = [
+  {
+    id: '1',
+    avatar:
+      'https://s3-alpha-sig.figma.com/img/c147/98cf/5293c57333d6b58c079ca634d833acf3?Expires=1745798400&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=Sy8EdQ1gWnL2BWHOzRGh8A8tdv7~v9YFJC7fs~XTe7~08zzDk37d0j~y3bTGeOZS3s0M1vESujJPKICrROcuB7qo4XdRuDE5SAgt6NOUD-h5dogRCJ79J67jl9W6jTVEHLhRwux7WFhx9GzKEkogcGO-VvBfLiu6M~0TCk3RLaq6A1b7k4hS1vwUbl5X1ztQcIJ3BapCwcXvBWUX51ubx79188yyxmkcA1v2XAVdhB2~SZEGXXOO5PNORBJI9fi8mk9HhUs1hRf-UevHhvpB0j6X0wzrkzzc0QdbsznHTjpz5q8ZmiE37tN-zETIZVkBiPApG3l8XuZ7mdrInn07DA__',
+    userId: '100',
+    isVarified: true,
+    isFollowed: false,
+    hasStatus: true,
+    video_url: 'https://www.w3schools.com/html/mov_bbb.mp4',
+    sound: 'ORIGINAL - Drop that by justine beiber',
+    username: '@vikash',
+    caption: 'Exploring tech trends 🚀',
+    likes: '66k',
+    comments: '6.4k',
+    share: '16k',
+    repeat: '16.5k',
+  },
+  {
+    id: '2',
+    avatar:
+      'https://s3-alpha-sig.figma.com/img/c147/98cf/5293c57333d6b58c079ca634d833acf3?Expires=1745798400&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=Sy8EdQ1gWnL2BWHOzRGh8A8tdv7~v9YFJC7fs~XTe7~08zzDk37d0j~y3bTGeOZS3s0M1vESujJPKICrROcuB7qo4XdRuDE5SAgt6NOUD-h5dogRCJ79J67jl9W6jTVEHLhRwux7WFhx9GzKEkogcGO-VvBfLiu6M~0TCk3RLaq6A1b7k4hS1vwUbl5X1ztQcIJ3BapCwcXvBWUX51ubx79188yyxmkcA1v2XAVdhB2~SZEGXXOO5PNORBJI9fi8mk9HhUs1hRf-UevHhvpB0j6X0wzrkzzc0QdbsznHTjpz5q8ZmiE37tN-zETIZVkBiPApG3l8XuZ7mdrInn07DA__',
+    userId: '100',
+    isVarified: false,
+    isFolowed: true,
+    hasStatus: false,
+    video_url:
+      'https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4',
+    sound: null,
+    username: '@john',
+    caption: 'Chillin on a weekend 🏖️',
+    likes: '66k',
+    comments: '6.4k',
+    share: '16k',
+    repeat: '16.5k',
+  },
+  {
+    id: '3',
+    avatar:
+      'https://s3-alpha-sig.figma.com/img/c147/98cf/5293c57333d6b58c079ca634d833acf3?Expires=1745798400&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=Sy8EdQ1gWnL2BWHOzRGh8A8tdv7~v9YFJC7fs~XTe7~08zzDk37d0j~y3bTGeOZS3s0M1vESujJPKICrROcuB7qo4XdRuDE5SAgt6NOUD-h5dogRCJ79J67jl9W6jTVEHLhRwux7WFhx9GzKEkogcGO-VvBfLiu6M~0TCk3RLaq6A1b7k4hS1vwUbl5X1ztQcIJ3BapCwcXvBWUX51ubx79188yyxmkcA1v2XAVdhB2~SZEGXXOO5PNORBJI9fi8mk9HhUs1hRf-UevHhvpB0j6X0wzrkzzc0QdbsznHTjpz5q8ZmiE37tN-zETIZVkBiPApG3l8XuZ7mdrInn07DA__',
+    userId: '100',
+    isVarified: true,
+    isFolowed: true,
+    hasStatus: true,
+    video_url: 'https://www.w3schools.com/html/movie.mp4',
+    sound: 'ORIGINAL - Drop that by justine beiber',
+    username: '@sara',
+    caption: 'Dance vibes 💃🔥',
+    likes: '66k',
+    comments: '6.4k',
+    share: '16k',
+    repeat: '16.5k',
+  },
+  {
+    id: '4',
+    avatar:
+      'https://s3-alpha-sig.figma.com/img/c147/98cf/5293c57333d6b58c079ca634d833acf3?Expires=1745798400&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=Sy8EdQ1gWnL2BWHOzRGh8A8tdv7~v9YFJC7fs~XTe7~08zzDk37d0j~y3bTGeOZS3s0M1vESujJPKICrROcuB7qo4XdRuDE5SAgt6NOUD-h5dogRCJ79J67jl9W6jTVEHLhRwux7WFhx9GzKEkogcGO-VvBfLiu6M~0TCk3RLaq6A1b7k4hS1vwUbl5X1ztQcIJ3BapCwcXvBWUX51ubx79188yyxmkcA1v2XAVdhB2~SZEGXXOO5PNORBJI9fi8mk9HhUs1hRf-UevHhvpB0j6X0wzrkzzc0QdbsznHTjpz5q8ZmiE37tN-zETIZVkBiPApG3l8XuZ7mdrInn07DA__',
+    userId: '100',
+    isVarified: true,
+    isFolowed: false,
+    hasStatus: false,
+    video_url: 'https://media.w3.org/2010/05/sintel/trailer_hd.mp4',
+    sound: 'ORIGINAL - Drop that by justine beiber',
+    username: '@lisa',
+    caption: 'Behind the scenes 🎬',
+    likes: '66k',
+    comments: '6.4k',
+    share: '16k',
+    repeat: '16.5k',
+  },
+  {
+    id: '5',
+    avatar:
+      'https://s3-alpha-sig.figma.com/img/c147/98cf/5293c57333d6b58c079ca634d833acf3?Expires=1745798400&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=Sy8EdQ1gWnL2BWHOzRGh8A8tdv7~v9YFJC7fs~XTe7~08zzDk37d0j~y3bTGeOZS3s0M1vESujJPKICrROcuB7qo4XdRuDE5SAgt6NOUD-h5dogRCJ79J67jl9W6jTVEHLhRwux7WFhx9GzKEkogcGO-VvBfLiu6M~0TCk3RLaq6A1b7k4hS1vwUbl5X1ztQcIJ3BapCwcXvBWUX51ubx79188yyxmkcA1v2XAVdhB2~SZEGXXOO5PNORBJI9fi8mk9HhUs1hRf-UevHhvpB0j6X0wzrkzzc0QdbsznHTjpz5q8ZmiE37tN-zETIZVkBiPApG3l8XuZ7mdrInn07DA__',
+    userId: '100',
+    isVarified: false,
+    isFollowed: true,
+    hasStatus: true,
+    video_url: 'https://media.w3.org/2010/05/sintel/trailer.mp4',
+    sound: null,
+    username: '@mike',
+    caption: 'Nature walk 🌿',
+    likes: '66k',
+    comments: '6.4k',
+    share: '16k',
+    repeat: '16.5k',
+  },
+];
 
 const ContentScreen = () => {
-  return (
-    <View>
-      <Text>ContentScreen</Text>
+  const flatListRef = React.useRef<any>(null);
+  const videoRef = React.useRef<VideoRef[]>([]);
+  const [currentIndex, setCurrentIndex] = React.useState(0);
+
+  const onVideoEnd = () => {
+    if (currentIndex < videos.length - 1) {
+      flatListRef.current.scrollToIndex({
+        index: currentIndex + 1,
+        animated: true,
+      });
+      setCurrentIndex(currentIndex + 1);
+    }
+  };
+
+  const handleVideoRef = React.useCallback(
+    (e: VideoRef | null, index: any) => {
+      videoRef.current[index] = e ?? videoRef.current[index];
+    },
+    [currentIndex, videoRef],
+  );
+
+  const onVideoScroll = (e: NativeSyntheticEvent<NativeScrollEvent>) => {
+    const index = Math.round(e.nativeEvent.contentOffset.y / DH);
+    setCurrentIndex(index);
+    const currentVideo = videoRef.current[index];
+    currentVideo?.seek(0);
+  };
+
+  const renderItem = ({item, index}: any) => (
+    <View style={styles.videoContainer}>
+      <VideoComponent
+        ref={e => handleVideoRef(e, index)}
+        source={{uri: item.video_url}}
+        resizeMode="cover"
+        repeat={false}
+        onEnd={onVideoEnd}
+        paused={currentIndex !== index}
+        style={styles.video}
+        muted={false}
+        volume={1}
+      />
+
+      <View style={styles.videoDetails}>
+        {item.sound && (
+          <View style={styles.soundContainer}>
+            <Image
+              source={require('../../../assets/icon/green-music.png')}
+              style={styles.soundIcon}
+            />
+            <Text style={styles.soundText}>{item.sound}</Text>
+          </View>
+        )}
+        <Text style={styles.caption}>{item.caption}</Text>
+        <View style={styles.userDetails}>
+          <TouchableHighlight
+            style={[
+              styles.avatarContainer,
+              item.hasStatus && {borderColor: COLORS.greenTeal, borderWidth: 2},
+            ]}>
+            <Image
+              source={{uri: item.avatar}}
+              style={[styles.avatar, item.hasStatus && {padding: 10}]}
+            />
+          </TouchableHighlight>
+          <Text style={styles.username}>{item.username}</Text>
+        </View>
+      </View>
+
+      <View style={styles.actionButtons}>
+        <TouchableOpacity style={styles.iconButton}>
+          <Image
+            source={require('../../../assets/icon/white-heart.png')}
+            style={styles.icon}
+          />
+          <Text style={styles.iconText}>{item.likes}</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.iconButton}>
+          <Image
+            source={require('../../../assets/icon/white-comment.png')}
+            style={styles.icon}
+          />
+          <Text style={styles.iconText}>{item.comments}</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.iconButton}>
+          <Image
+            source={require('../../../assets/icon/white-send.png')}
+            style={styles.icon}
+          />
+          <Text style={styles.iconText}>{item.share}</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.iconButton}>
+          <Image
+            source={require('../../../assets/icon/white-repeat.png')}
+            style={styles.icon}
+          />
+          <Text style={styles.iconText}>{item.repeat}</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.iconButton}>
+          <Image
+            source={require('../../../assets/icon/white-more-horizontal.png')}
+            style={styles.icon}
+          />
+        </TouchableOpacity>
+      </View>
     </View>
-  )
-}
+  );
 
-export default ContentScreen
+  return (
+    <FlatList
+      ref={flatListRef}
+      data={videos}
+      renderItem={renderItem}
+      keyExtractor={item => item.id}
+      pagingEnabled
+      showsVerticalScrollIndicator={false}
+      snapToInterval={DH}
+      decelerationRate="fast"
+      bounces={false}
+      onMomentumScrollEnd={onVideoScroll}
+      onMomentumScrollBegin={onVideoScroll}
+    />
+  );
+};
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+  videoContainer: {
+    flex: 1,
+    width: DW,
+    height: DH,
+    backgroundColor: '#000',
+    position: 'relative',
+  },
+  video: {
+    width: '100%',
+    height: '100%',
+    position: 'absolute',
+  },
+  videoDetails: {
+    position: 'absolute',
+    bottom: 130,
+    left: 15,
+    gap: 10,
+  },
+  soundContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 10,
+  },
+  soundIcon: {
+    width: 20,
+    height: 20,
+    resizeMode: 'contain',
+  },
+  soundText: {
+    fontSize: 14,
+    color: COLORS.white,
+  },
+  userDetails: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 10,
+  },
+  avatarContainer: {
+    width: 50,
+    height: 50,
+    borderRadius: 25,
+    overflow: 'hidden',
+  },
+  avatar: {
+    width: '100%',
+    height: '100%',
+    resizeMode: 'cover',
+  },
+  username: {
+    color: COLORS.white,
+    fontWeight: 'bold',
+    fontSize: 20,
+    marginBottom: 4,
+  },
+  caption: {
+    color: '#fff',
+    fontSize: 14,
+  },
+  actionButtons: {
+    position: 'absolute',
+    right: 15,
+    bottom: 100,
+    alignItems: 'center',
+  },
+  iconButton: {
+    marginBottom: 25,
+    alignItems: 'center',
+  },
+  icon: {
+    width: 35,
+    height: 35,
+    resizeMode: 'contain',
+  },
+  iconText: {
+    color: '#fff',
+    marginTop: 5,
+    fontSize: 13,
+  },
+});
+export default ContentScreen;

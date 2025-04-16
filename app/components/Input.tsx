@@ -41,12 +41,14 @@ const Input = ({
         onBlur={onBlur}
         style={[
           {
-            backgroundColor: COLORS.lightgrey,
             height: 45,
             borderRadius: 10,
             color: 'black',
             paddingLeft: 12,
             fontSize: 14,
+            backgroundColor: COLORS.white,
+            borderWidth:1,
+            borderColor:COLORS.grey
           },
           inputStyle,
         ]}

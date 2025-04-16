@@ -59,27 +59,29 @@ const LoginScreen = () => {
           <Pressable
             onPress={() => setView(1)}
             style={{
-              backgroundColor: view === 1 ? 'white' : COLORS.black,
+              backgroundColor: view === 1 ? 'white' : COLORS.grey,
               height: '100%',
               width: '49%',
               alignItems: 'center',
               justifyContent: 'center',
               borderRadius: 4,
             }}>
-            <MyText size={FONT_SIZE.sm} color={view === 1 ? 'black' : 'white'}>Login</MyText>
+            <MyText size={FONT_SIZE.sm} color={'black'}>Login</MyText>
+            {/* <MyText size={FONT_SIZE.sm} color={view === 1 ? 'black' : 'white'}>Login</MyText> */}
           </Pressable>
 
           <Pressable
             onPress={() => setView(2)}
             style={{
-              backgroundColor: view === 2 ? 'white' : COLORS.black,
+              backgroundColor: view === 2 ? 'white' : COLORS.grey,
               height: '100%',
               width: '49%',
               alignItems: 'center',
               justifyContent: 'center',
               borderRadius: 4,
             }}>
-            <MyText size={FONT_SIZE.sm} color={view === 2 ? 'black' : 'white'}>Sign up</MyText>
+            <MyText size={FONT_SIZE.sm} color={'black'}>Sign up</MyText>
+            {/* <MyText size={FONT_SIZE.sm} color={view === 2 ? 'black' : 'white'}>Sign up</MyText> */}
           </Pressable>
         </View>
 
@@ -261,7 +263,7 @@ const styles = StyleSheet.create({
   },
   viewBtn: {
     alignSelf: 'center',
-    backgroundColor: COLORS.black,
+    backgroundColor: COLORS.grey,
     borderRadius: 5,
     height: 30,
     width: 180,
@@ -275,8 +277,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     borderRadius: 10,
-    backgroundColor: COLORS.lightgrey,
     paddingHorizontal: 10,
+    backgroundColor: COLORS.white,
+    borderWidth:1,
+    borderColor:COLORS.grey
   },
   input: {
     height: 45,

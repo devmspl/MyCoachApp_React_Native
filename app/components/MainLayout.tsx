@@ -14,12 +14,11 @@ type Props = {
 
 const MainLayout = ({children, title, onBack}: Props) => {
   const extraStyle = {
-    marginVertical: 40,
+    marginVertical: 20,
     marginHorizontal: 15,
-    marginTop: 20,
   };
   return (
-    <View style={{flex: 1, backgroundColor: COLORS.white, paddingTop: 20}}>
+    <View style={{flex: 1, backgroundColor: COLORS.bg, paddingTop: 20}}>
       <View
         style={[
           {
