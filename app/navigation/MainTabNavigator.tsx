@@ -1,7 +1,7 @@
 import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import HomeStack from './HomeStack';
-import {COLORS} from '../styles';
+import {COLORS, DH} from '../styles';
 import {TabNavigatorParams} from './types';
 import ContentStack from './ContentStack';
 import CreateStack from './CreateStack';
@@ -31,9 +31,9 @@ const MainTabNavigator = () => {
         screenOptions={{
           headerShown: false,
           tabBarStyle: {
-            height: 90,
+            paddingTop: DH * 0.02,
+            height: DH * 0.09,
             backgroundColor: COLORS.white,
-            paddingTop: 15,
           },
         }}>
         <Tab.Screen

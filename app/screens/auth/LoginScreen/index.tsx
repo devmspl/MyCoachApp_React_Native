@@ -66,7 +66,9 @@ const LoginScreen = () => {
               justifyContent: 'center',
               borderRadius: 4,
             }}>
-            <MyText size={FONT_SIZE.sm} color={'black'}>Login</MyText>
+            <MyText size={FONT_SIZE.sm} color={'black'}>
+              Login
+            </MyText>
             {/* <MyText size={FONT_SIZE.sm} color={view === 1 ? 'black' : 'white'}>Login</MyText> */}
           </Pressable>
 
@@ -80,7 +82,9 @@ const LoginScreen = () => {
               justifyContent: 'center',
               borderRadius: 4,
             }}>
-            <MyText size={FONT_SIZE.sm} color={'black'}>Sign up</MyText>
+            <MyText size={FONT_SIZE.sm} color={'black'}>
+              Sign up
+            </MyText>
             {/* <MyText size={FONT_SIZE.sm} color={view === 2 ? 'black' : 'white'}>Sign up</MyText> */}
           </Pressable>
         </View>
@@ -91,7 +95,7 @@ const LoginScreen = () => {
             <MyText size={FONT_SIZE['xl']} bold={FONT_WEIGHT.bold}>
               Welcome Back
             </MyText>
-        
+
             <MyText
               size={FONT_SIZE.sm}
               color={'gray'}
@@ -279,8 +283,8 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     paddingHorizontal: 10,
     backgroundColor: COLORS.white,
-    borderWidth:1,
-    borderColor:COLORS.grey
+    borderWidth: 1,
+    borderColor: COLORS.grey,
   },
   input: {
     height: 45,

@@ -1,5 +1,5 @@
 import {SafeAreaView, ScrollView, StyleSheet, Text, View} from 'react-native';
-import React from 'react';
+import React, {useCallback, useState} from 'react';
 import MainLayout from '../../components/MainLayout';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import {COLORS, FONT_SIZE, FONT_WEIGHT} from '../../styles';
@@ -9,10 +9,32 @@ import {useNavigation} from '@react-navigation/native';
 import {MyText} from '../../components/MyText';
 import Input from '../../components/Input';
 import PrimaryBtn from '../../components/PrimaryBtn';
+import Slider from 'rn-range-slider';
+import Thumb from '../../components/Slider/Thumb';
+import Rail from '../../components/Slider/Rail';
+import RailSelected from '../../components/Slider/RailSelected';
+import Label from '../../components/Slider/Label';
+import Notch from '../../components/Slider/Notch';
 
 const OnboardingOne = () => {
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
+  const [rangeDisabled, setRangeDisabled] = useState(false);
+  const [low, setLow] = useState(400);
+  const [high, setHigh] = useState(1500);
+  const [min, setMin] = useState(10);
+  const [max, setMax] = useState(2000);
+  const [floatingLabel, setFloatingLabel] = useState(false);
+
+  const renderThumb = useCallback(() => <Thumb />, []);
+  const renderRail = useCallback(() => <Rail />, []);
+  const renderRailSelected = useCallback(() => <RailSelected />, []);
+  const renderLabel = useCallback((value: any) => <Label text={value} />, []);
+  const renderNotch = useCallback(() => <Notch />, []);
+  const handleValueChange = useCallback(({low, high}: any) => {
+    setLow(low);
+    setHigh(high);
+  }, []);
   return (
     <MainLayout>
       <ScrollView contentContainerStyle={{paddingHorizontal: 20, flex: 1}}>
@@ -56,12 +78,49 @@ const OnboardingOne = () => {
 
             <Input placeholder="First Name" />
             <Input placeholder="Last Name" />
-            <Input placeholder="Your Job Title" />
+            <Input placeholder="Your Job Title" />                                  
             <Input placeholder="Your Age" />
+
+            <MyText bold={FONT_WEIGHT.bold} style={{marginTop:15}}>Salary Range</MyText>
+
+            <Slider
+              style={{marginTop: 50}}
+              low={low}
+              high={high}
+              min={min}
+              max={max}
+              step={1}
+              floatingLabel
+              renderThumb={renderThumb}
+              renderRail={renderRail}
+              renderRailSelected={renderRailSelected}
+              renderLabel={renderLabel}
+              renderNotch={renderNotch}
+              onValueChanged={handleValueChange}
+            />
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                marginVertical: 10,
+              }}>
+              <View style={{alignItems: 'center', gap: 10}}>
+                <MyText size={FONT_SIZE.sm}>Minimun</MyText>
+                <MyText bold={FONT_WEIGHT.semibold}>${min}</MyText>
+              </View>
+              <View style={{alignItems: 'center', gap: 10}}>
+                <MyText size={FONT_SIZE.sm}>Maximun</MyText>
+                <MyText bold={FONT_WEIGHT.semibold}>${max}</MyText>
+              </View>
+            </View>
             <Input placeholder="Your Education Level" />
           </View>
+          <PrimaryBtn
+            onPress={() => navigation.navigate('OnboardingTwo')}
+            containerStyle={{marginTop: 120}}
+            text="Next"
+          />
         </View>
-        <PrimaryBtn onPress={() => navigation.navigate('OnboardingTwo')} containerStyle={{marginBottom: 20}} text="Next" />
       </ScrollView>
     </MainLayout>
   );

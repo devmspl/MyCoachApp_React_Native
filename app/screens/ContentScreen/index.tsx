@@ -9,9 +9,16 @@ import {
   NativeSyntheticEvent,
   NativeScrollEvent,
   TouchableHighlight,
+  AppState,
+  TouchableWithoutFeedback,
 } from 'react-native';
 import {Video as VideoComponent, VideoRef} from 'react-native-video';
-import {COLORS, DH, DW} from '../../styles';
+import {COLORS, DH, DW, FONT_SIZE, FONT_WEIGHT} from '../../styles';
+import {MyText} from '../../components/MyText';
+import {useIsFocused} from '@react-navigation/native';
+import {useDispatch, useSelector} from 'react-redux';
+import {setIsContentScreenFocued} from '../../redux/feature/content/contentSlice';
+import {RootState} from '../../redux';
 
 const videos = [
   {
@@ -55,7 +62,7 @@ const videos = [
       'https://s3-alpha-sig.figma.com/img/c147/98cf/5293c57333d6b58c079ca634d833acf3?Expires=1745798400&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=Sy8EdQ1gWnL2BWHOzRGh8A8tdv7~v9YFJC7fs~XTe7~08zzDk37d0j~y3bTGeOZS3s0M1vESujJPKICrROcuB7qo4XdRuDE5SAgt6NOUD-h5dogRCJ79J67jl9W6jTVEHLhRwux7WFhx9GzKEkogcGO-VvBfLiu6M~0TCk3RLaq6A1b7k4hS1vwUbl5X1ztQcIJ3BapCwcXvBWUX51ubx79188yyxmkcA1v2XAVdhB2~SZEGXXOO5PNORBJI9fi8mk9HhUs1hRf-UevHhvpB0j6X0wzrkzzc0QdbsznHTjpz5q8ZmiE37tN-zETIZVkBiPApG3l8XuZ7mdrInn07DA__',
     userId: '100',
     isVarified: true,
-    isFolowed: true,
+    isFolowed: false,
     hasStatus: true,
     video_url: 'https://www.w3schools.com/html/movie.mp4',
     sound: 'ORIGINAL - Drop that by justine beiber',
@@ -103,9 +110,15 @@ const videos = [
 ];
 
 const ContentScreen = () => {
+  const isFocused = useIsFocused();
+  const dispatch = useDispatch();
   const flatListRef = React.useRef<any>(null);
   const videoRef = React.useRef<VideoRef[]>([]);
   const [currentIndex, setCurrentIndex] = React.useState(0);
+
+  const {isContentScreenFocued} = useSelector(
+    (state: RootState) => state.content,
+  );
 
   const onVideoEnd = () => {
     if (currentIndex < videos.length - 1) {
@@ -114,6 +127,8 @@ const ContentScreen = () => {
         animated: true,
       });
       setCurrentIndex(currentIndex + 1);
+      const currentVideo = videoRef.current[currentIndex];
+      currentVideo?.seek(0);
     }
   };
 
@@ -131,84 +146,151 @@ const ContentScreen = () => {
     currentVideo?.seek(0);
   };
 
-  const renderItem = ({item, index}: any) => (
-    <View style={styles.videoContainer}>
-      <VideoComponent
-        ref={e => handleVideoRef(e, index)}
-        source={{uri: item.video_url}}
-        resizeMode="cover"
-        repeat={false}
-        onEnd={onVideoEnd}
-        paused={currentIndex !== index}
-        style={styles.video}
-        muted={false}
-        volume={1}
-      />
+  React.useEffect(() => {
+    const handleAppStateChange = (state: string) => {
+      const shouldPouse = state !== 'active' || !isContentScreenFocued;
+      if (shouldPouse) {
+        videoRef.current[currentIndex]?.pause();
+      } else if (state === 'active') {
+        videoRef.current[currentIndex]?.resume();
+      }
+    };
 
-      <View style={styles.videoDetails}>
-        {item.sound && (
-          <View style={styles.soundContainer}>
-            <Image
-              source={require('../../../assets/icon/green-music.png')}
-              style={styles.soundIcon}
-            />
-            <Text style={styles.soundText}>{item.sound}</Text>
+    const AppStateStatus = AppState.addEventListener(
+      'change',
+      handleAppStateChange,
+    );
+
+    return () => {
+      AppStateStatus?.remove();
+    };
+  }, [currentIndex, videoRef]);
+
+  React.useEffect(() => {
+    dispatch(setIsContentScreenFocued(isFocused));
+  }, []);
+
+  const renderItem = ({item, index}: any) => {
+    console.log(
+      'index === currentIndex',
+      index === currentIndex,
+      index,
+      currentIndex,
+    );
+    // if (index === currentIndex) {
+    //   dispatch(setIsContentScreenFocued(false));
+    // } else {
+    //   dispatch(setIsContentScreenFocued(true));
+    // }
+    return (
+      <View style={styles.videoContainer}>
+        <TouchableWithoutFeedback
+          onPress={() => {
+            dispatch(setIsContentScreenFocued(!isContentScreenFocued));
+          }}>
+          <VideoComponent
+            ref={e => handleVideoRef(e, index)}
+            source={{uri: item.video_url}}
+            resizeMode="cover"
+            repeat={false}
+            onEnd={onVideoEnd}
+            paused={
+              currentIndex !== index || !isContentScreenFocued || !isFocused
+            }
+            style={styles.video}
+            muted={false}
+            volume={1}
+          />
+        </TouchableWithoutFeedback>
+
+        <View style={styles.videoDetails}>
+          {item.sound && (
+            <View style={styles.soundContainer}>
+              <Image
+                source={require('../../../assets/icon/yellow-music-note.png')}
+                style={styles.soundIcon}
+              />
+              <Text style={styles.soundText}>{item.sound}</Text>
+            </View>
+          )}
+          <Text style={styles.caption}>{item.caption}</Text>
+          <View style={styles.userDetails}>
+            <TouchableHighlight
+              style={[
+                styles.avatarContainer,
+                item.hasStatus && {
+                  borderColor: COLORS.greenTeal,
+                  borderWidth: 2,
+                },
+              ]}>
+              <Image
+                source={{uri: item.avatar}}
+                style={[styles.avatar, item.hasStatus && {padding: 10}]}
+              />
+            </TouchableHighlight>
+            <Text style={styles.username}>{item.username}</Text>
+            {item.isVarified && (
+              <Image
+                source={require('../../../assets/icon/white-verified.png')}
+                style={styles.verifiedIcon}
+              />
+            )}
+
+            {!item.isFollowed && (
+              <TouchableOpacity
+                activeOpacity={0.8}
+                onPress={() => {}}
+                style={styles.followBtn}>
+                <MyText
+                  size={FONT_SIZE.l}
+                  color={'black'}
+                  bold={FONT_WEIGHT.bold}>
+                  Follow
+                </MyText>
+              </TouchableOpacity>
+            )}
           </View>
-        )}
-        <Text style={styles.caption}>{item.caption}</Text>
-        <View style={styles.userDetails}>
-          <TouchableHighlight
-            style={[
-              styles.avatarContainer,
-              item.hasStatus && {borderColor: COLORS.greenTeal, borderWidth: 2},
-            ]}>
+        </View>
+
+        <View style={styles.actionButtons}>
+          <TouchableOpacity style={styles.iconButton}>
             <Image
-              source={{uri: item.avatar}}
-              style={[styles.avatar, item.hasStatus && {padding: 10}]}
+              source={require('../../../assets/icon/white-heart.png')}
+              style={styles.icon}
             />
-          </TouchableHighlight>
-          <Text style={styles.username}>{item.username}</Text>
+            <Text style={styles.iconText}>{item.likes}</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.iconButton}>
+            <Image
+              source={require('../../../assets/icon/white-comment.png')}
+              style={styles.icon}
+            />
+            <Text style={styles.iconText}>{item.comments}</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.iconButton}>
+            <Image
+              source={require('../../../assets/icon/white-send.png')}
+              style={styles.icon}
+            />
+            <Text style={styles.iconText}>{item.share}</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.iconButton}>
+            <Image
+              source={require('../../../assets/icon/white-repeat.png')}
+              style={styles.icon}
+            />
+            <Text style={styles.iconText}>{item.repeat}</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.iconButton}>
+            <Image
+              source={require('../../../assets/icon/white-more-horizontal.png')}
+              style={styles.icon}
+            />
+          </TouchableOpacity>
         </View>
       </View>
-
-      <View style={styles.actionButtons}>
-        <TouchableOpacity style={styles.iconButton}>
-          <Image
-            source={require('../../../assets/icon/white-heart.png')}
-            style={styles.icon}
-          />
-          <Text style={styles.iconText}>{item.likes}</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.iconButton}>
-          <Image
-            source={require('../../../assets/icon/white-comment.png')}
-            style={styles.icon}
-          />
-          <Text style={styles.iconText}>{item.comments}</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.iconButton}>
-          <Image
-            source={require('../../../assets/icon/white-send.png')}
-            style={styles.icon}
-          />
-          <Text style={styles.iconText}>{item.share}</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.iconButton}>
-          <Image
-            source={require('../../../assets/icon/white-repeat.png')}
-            style={styles.icon}
-          />
-          <Text style={styles.iconText}>{item.repeat}</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.iconButton}>
-          <Image
-            source={require('../../../assets/icon/white-more-horizontal.png')}
-            style={styles.icon}
-          />
-        </TouchableOpacity>
-      </View>
-    </View>
-  );
+    );
+  };
 
   return (
     <FlatList
@@ -218,11 +300,9 @@ const ContentScreen = () => {
       keyExtractor={item => item.id}
       pagingEnabled
       showsVerticalScrollIndicator={false}
-      snapToInterval={DH}
-      decelerationRate="fast"
       bounces={false}
+      onScroll={onVideoScroll}
       onMomentumScrollEnd={onVideoScroll}
-      onMomentumScrollBegin={onVideoScroll}
     />
   );
 };
@@ -231,7 +311,7 @@ const styles = StyleSheet.create({
   videoContainer: {
     flex: 1,
     width: DW,
-    height: DH,
+    height: DH * 0.8815,
     backgroundColor: '#000',
     position: 'relative',
   },
@@ -242,7 +322,7 @@ const styles = StyleSheet.create({
   },
   videoDetails: {
     position: 'absolute',
-    bottom: 130,
+    bottom: 20,
     left: 15,
     gap: 10,
   },
@@ -282,6 +362,19 @@ const styles = StyleSheet.create({
     fontSize: 20,
     marginBottom: 4,
   },
+  verifiedIcon: {
+    width: 22,
+    height: 22,
+    resizeMode: 'contain',
+  },
+  followBtn: {
+    backgroundColor: 'white',
+    paddingVertical: 5,
+    paddingHorizontal: 15,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 10,
+  },
   caption: {
     color: '#fff',
     fontSize: 14,
@@ -289,7 +382,7 @@ const styles = StyleSheet.create({
   actionButtons: {
     position: 'absolute',
     right: 15,
-    bottom: 100,
+    bottom: 0,
     alignItems: 'center',
   },
   iconButton: {

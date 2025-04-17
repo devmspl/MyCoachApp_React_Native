@@ -1,6 +1,6 @@
 import React from 'react';
 import {COLORS} from '../styles';
-import {View, ScrollView, Image, Dimensions} from 'react-native';
+import {View, ScrollView, Image, Dimensions, Platform} from 'react-native';
 import {TouchableOpacity} from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {RegularText} from './MyText';
@@ -18,7 +18,12 @@ const MainLayout = ({children, title, onBack}: Props) => {
     marginHorizontal: 15,
   };
   return (
-    <View style={{flex: 1, backgroundColor: COLORS.bg, paddingTop: 20}}>
+    <View
+      style={{
+        flex: 1,
+        backgroundColor: COLORS.bg,
+        paddingTop: Platform.OS === 'ios' ? 40 : 20,
+      }}>
       <View
         style={[
           {

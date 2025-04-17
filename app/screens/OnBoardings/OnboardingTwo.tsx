@@ -1,5 +1,5 @@
-import {ScrollView, StyleSheet, View} from 'react-native';
-import React from 'react';
+import {ScrollView, StyleSheet, View,} from 'react-native';
+import React, { useCallback, useState } from 'react';
 import MainLayout from '../../components/MainLayout';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import {COLORS, FONT_SIZE, FONT_WEIGHT} from '../../styles';
@@ -9,6 +9,8 @@ import {useNavigation} from '@react-navigation/native';
 import {MyText} from '../../components/MyText';
 import PrimaryBtn from '../../components/PrimaryBtn';
 import Fontisto from 'react-native-vector-icons/Fontisto';
+import Slider from 'rn-range-slider';
+
 
 const options = [
   {id: 1, name: 'Married'},
@@ -56,6 +58,8 @@ const OnboardingTwo = () => {
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
   const [selectedId, setSelectedId] = React.useState<null | number>(1);
+
+
 
   return (
     <MainLayout>
@@ -108,6 +112,8 @@ const OnboardingTwo = () => {
               />
             ))}
           </View>
+
+        
         </View>
         <PrimaryBtn
           onPress={() => navigation.navigate('OnboardingThree')}
