@@ -1,9 +1,10 @@
 import {
   FlatList,
   Image,
+  Modal,
   Pressable,
-  ScrollView,
   StyleSheet,
+  TouchableOpacity,
   View,
 } from 'react-native';
 import React from 'react';
@@ -16,11 +17,13 @@ import {COLORS, FONT_SIZE, FONT_WEIGHT} from '../../styles';
 import Rewards from './Rewards';
 import Goals from './Goals';
 import Trend from './Trends';
+import EvilIcons from 'react-native-vector-icons/EvilIcons';
 
 const SavingsScreen = () => {
   const navigation =
     useNavigation<NativeStackNavigationProp<SavingsStackParams>>();
   const [view, setView] = React.useState(1);
+  const [isModalVisible, setIsModalVisible] = React.useState(false);
   return (
     <MainLayout onBack={navigation.goBack} title="Savings">
       <FlatList
@@ -47,7 +50,12 @@ const SavingsScreen = () => {
                   </MyText>
                 </Pressable>
                 <Pressable
-                  onPress={() => setView(2)}
+                  onPress={() => {
+                    setView(2);
+                    setTimeout(() => {
+                      setIsModalVisible(true);
+                    }, 1000);
+                  }}
                   style={{
                     backgroundColor: view === 2 ? 'white' : COLORS.grey,
                     height: '100%',
@@ -83,6 +91,104 @@ const SavingsScreen = () => {
               {view === 3 && <Rewards />}
 
               {/* {END} */}
+
+              {/* congrats modal  */}
+              <Modal
+                animationType="fade"
+                transparent={true}
+                visible={isModalVisible}
+                onRequestClose={() => {
+                  setIsModalVisible(!isModalVisible);
+                }}>
+                <View style={styles.centeredView}>
+                  <View style={styles.modalView}>
+                    <TouchableOpacity
+                      onPress={() => setIsModalVisible(!isModalVisible)}
+                      style={{width: '100%'}}>
+                      <EvilIcons
+                        name="close"
+                        size={24}
+                        color={COLORS.black}
+                        style={{
+                          width: 24,
+                          height: 24,
+                          alignSelf: 'flex-end',
+                          marginBottom: 10,
+                        }}
+                      />
+                    </TouchableOpacity>
+                    <View style={styles.modalHeader}>
+                      <Image
+                        source={require('../../../assets/images/congrats-thumb.png')}
+                        style={styles.thumb}
+                      />
+
+                      <MyText
+                        bold={FONT_WEIGHT.bold}
+                        size={FONT_SIZE.l}
+                        color={COLORS.green}>
+                        Congratulations!
+                      </MyText>
+
+                      <MyText size={FONT_SIZE.sm} color={COLORS.black}>
+                        You just hit half of your savings goal
+                      </MyText>
+
+                      <View style={styles.modalTextView1}>
+                        <MyText size={FONT_SIZE.sm} bold={FONT_WEIGHT.bold}>
+                          House Mortgage Plan.
+                        </MyText>
+                        <MyText size={FONT_SIZE.sm}>
+                          You are doing great!
+                        </MyText>
+                      </View>
+                    </View>
+
+                    <View style={styles.modalFooter}>
+                      <MyText size={FONT_SIZE.sm} color={'#121212'}>
+                        Share your with friends!
+                      </MyText>
+                      <View style={styles.modalSocialIcons}>
+                        <TouchableOpacity
+                          style={styles.modalSocialIconContainer}>
+                          <Image
+                            source={require('../../../assets/icon/green-tiktok.png')}
+                            style={styles.modalSocialIcon}
+                          />
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                          style={styles.modalSocialIconContainer}>
+                          <Image
+                            source={require('../../../assets/icon/green-instagram.png')}
+                            style={styles.modalSocialIcon}
+                          />
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                          style={styles.modalSocialIconContainer}>
+                          <Image
+                            source={require('../../../assets/icon/green-x.png')}
+                            style={styles.modalSocialIcon}
+                          />
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                          style={styles.modalSocialIconContainer}>
+                          <Image
+                            source={require('../../../assets/icon/green-facebook.png')}
+                            style={styles.modalSocialIcon}
+                          />
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                          style={styles.modalSocialIconContainer}>
+                          <Image
+                            source={require('../../../assets/icon/green-sms.png')}
+                            style={[styles.modalSocialIcon, {width: 20, height: 20}]}
+                          />
+                        </TouchableOpacity>
+                      </View>
+                    </View>
+                  </View>
+                </View>
+              </Modal>
             </View>
           );
         }}
@@ -182,5 +288,95 @@ const styles = StyleSheet.create({
     width: 60,
     height: 70,
     resizeMode: 'contain',
+  },
+
+  centeredView: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  modalView: {
+    width: '90%',
+    backgroundColor: 'white',
+    borderRadius: 20,
+    padding: 35,
+    alignItems: 'center',
+    shadowColor: '#B8B8B880',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 10,
+  },
+  modalHeader: {
+    flexDirection: 'column',
+    alignItems: 'center',
+    gap: 10,
+    marginBottom: 20,
+  },
+  modalTextView1: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 4,
+  },
+  thumb: {
+    width: 55,
+    height: 55,
+    resizeMode: 'contain',
+  },
+  modalFooter: {
+    width: '100%',
+    flexDirection: 'column',
+    alignItems: 'center',
+    gap: 10,
+  },
+  modalSocialIcons: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 20,
+  },
+  modalSocialIconContainer: {
+    width: 40,
+    height: 40,
+    backgroundColor: COLORS.white,
+    alignItems: 'center',
+    justifyContent: 'center',
+    elevation: 1,
+    shadowColor: 'black',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    borderRadius: 50,
+    overflow: 'hidden',
+  },
+  modalSocialIcon: {
+    width: 22,
+    height: 22,
+    resizeMode: 'contain',
+  },
+  button: {
+    borderRadius: 20,
+    padding: 10,
+    elevation: 2,
+  },
+  buttonOpen: {
+    backgroundColor: '#F194FF',
+  },
+  buttonClose: {
+    backgroundColor: '#2196F3',
+  },
+  textStyle: {
+    color: 'white',
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+  modalText: {
+    marginBottom: 15,
+    textAlign: 'center',
   },
 });

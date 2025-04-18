@@ -1,18 +1,26 @@
-import {SafeAreaView, ScrollView, StyleSheet, Text, View} from 'react-native';
+import {
+  Image,
+  ScrollView,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import React from 'react';
-import MainLayout from '../../components/MainLayout';
+import MainLayout from '../../../components/MainLayout';
 import AntDesign from 'react-native-vector-icons/AntDesign';
-import {COLORS, FONT_SIZE, FONT_WEIGHT} from '../../styles';
+import {COLORS, FONT_SIZE, FONT_WEIGHT} from '../../../styles';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import {RootStackParams} from '../../navigation/types';
+import {RootStackParams} from '../../../navigation/types';
 import {useNavigation} from '@react-navigation/native';
-import {MyText} from '../../components/MyText';
-import Input from '../../components/Input';
-import PrimaryBtn from '../../components/PrimaryBtn';
+import {MyText} from '../../../components/MyText';
+import Input from '../../../components/Input';
+import PrimaryBtn from '../../../components/PrimaryBtn';
+import SelectInput from '../../../components/SelectInput';
 
 const OnboardingFive = () => {
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
+  const [selectedBank, setSelectedBank] = React.useState('');
   return (
     <MainLayout>
       <ScrollView contentContainerStyle={{paddingHorizontal: 20, flex: 1}}>
@@ -39,7 +47,6 @@ const OnboardingFive = () => {
                 style={[styles.btn, {backgroundColor: COLORS.primary}]}></View>
               <View
                 style={[styles.btn, {backgroundColor: COLORS.primary}]}></View>
-              <View style={styles.btn}></View>
             </View>
             <AntDesign name="arrowleft" size={1} color="white" />
           </View>
@@ -58,7 +65,39 @@ const OnboardingFive = () => {
               that will get us started.
             </MyText>
 
-            <Input placeholder="Bank Name" />
+            <View style={styles.plaidView}>
+              <TouchableOpacity
+                style={styles.plaidBtn}
+                activeOpacity={0.9}
+                onPress={() => navigation.navigate('PlaidBankSelection')}>
+                <MyText size={FONT_SIZE.sm} color={COLORS.white}>
+                  Link with Plaid
+                </MyText>
+                <Image
+                  source={require('../../../../assets/icon/plaid.png')}
+                  style={styles.plaidIcon}
+                />
+              </TouchableOpacity>
+            </View>
+
+            <SelectInput
+              data={[
+                {label: 'JPMorgan Chase & Co.', value: 'chase'},
+                {label: 'Bank of America', value: 'boa'},
+                {label: 'Wells Fargo', value: 'wells-fargo'},
+                {label: 'Citigroup', value: 'citi'},
+                {label: 'Goldman Sachs', value: 'goldman-sachs'},
+                {label: 'Morgan Stanley', value: 'morgan-stanley'},
+                {label: 'American Express Bank', value: 'amex'},
+                {label: 'U.S. Bank', value: 'us-bank'},
+                {label: 'PNC Financial Services', value: 'pnc'},
+                {label: 'TD Bank', value: 'td-bank'},
+              ]}
+              value={selectedBank}
+              onSelect={item => setSelectedBank(item.value)}
+              placeholder="Bank Name"
+            />
+
             <Input placeholder="Account Name" />
             <Input placeholder="Account Number" />
             <Input placeholder="IBAN Number" />
@@ -124,5 +163,27 @@ const styles = StyleSheet.create({
     width: 40,
     height: 8,
     backgroundColor: COLORS.grey,
+  },
+  plaidView: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+    marginTop: 20,
+    marginBottom: -30,
+  },
+  plaidBtn: {
+    borderRadius: 10,
+    paddingVertical: 10,
+    paddingHorizontal: 15,
+    backgroundColor: '#111111',
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexDirection: 'row',
+    gap: 7,
+  },
+  plaidIcon: {
+    width: 20,
+    height: 20,
+    resizeMode: 'contain',
   },
 });

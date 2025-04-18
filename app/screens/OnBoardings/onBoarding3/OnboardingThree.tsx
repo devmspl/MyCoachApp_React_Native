@@ -1,19 +1,27 @@
 import {SafeAreaView, ScrollView, StyleSheet, Text, View} from 'react-native';
 import React from 'react';
-import MainLayout from '../../components/MainLayout';
+import MainLayout from '../../../components/MainLayout';
 import AntDesign from 'react-native-vector-icons/AntDesign';
-import {COLORS, FONT_SIZE, FONT_WEIGHT} from '../../styles';
+import {COLORS, FONT_SIZE, FONT_WEIGHT} from '../../../styles';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import {RootStackParams} from '../../navigation/types';
+import {RootStackParams} from '../../../navigation/types';
 import {useNavigation} from '@react-navigation/native';
-import {MyText} from '../../components/MyText';
-import Input from '../../components/Input';
-import PrimaryBtn from '../../components/PrimaryBtn';
-import Input2 from '../../components/Input2';
+import {MyText} from '../../../components/MyText';
+import Input from '../../../components/Input';
+import PrimaryBtn from '../../../components/PrimaryBtn';
+import Input2 from '../../../components/Input2';
+import SelectInput from '../../../components/SelectInput';
 
 const OnboardingThree = () => {
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
+
+  const [selectedOptions, setSelectedOptions] = React.useState({
+    haveDebts: '',
+    haveInsurance: '',
+    budgetedBefore: '',
+    preferBudgetMethod: '',
+  });
   return (
     <MainLayout>
       <ScrollView contentContainerStyle={{paddingHorizontal: 20, flex: 1}}>
@@ -36,8 +44,7 @@ const OnboardingThree = () => {
                 style={[styles.btn, {backgroundColor: COLORS.primary}]}></View>
               <View
                 style={[styles.btn, {backgroundColor: COLORS.primary}]}></View>
-              <View style={styles.btn}></View>
-              <View style={styles.btn}></View>
+              <View style={[styles.btn, {backgroundColor: COLORS.primary}]}></View>
               <View style={styles.btn}></View>
             </View>
             <AntDesign name="arrowleft" size={1} color="white" />
@@ -60,17 +67,64 @@ const OnboardingThree = () => {
               recommend more accurately.
             </MyText>
 
-            <Input2 label="Do you have Debts?" placeholder="Pick an answer" />
-            <Input2
+            <SelectInput
+              label="Do you have Debts?"
+              data={[
+                {label: 'Yes, I have loans/debts', value: 'yes'},
+                {label: 'No, I don’t have any', value: 'no'},
+              ]}
+              value={selectedOptions.haveDebts}
+              onSelect={item =>
+                setSelectedOptions({...selectedOptions, haveDebts: item.value})
+              }
+              placeholder="Pick an answer"
+            />
+
+            <SelectInput
               label="Do you have Insurance?"
+              data={[
+                {label: 'Yes, I have insurance', value: 'yes'},
+                {label: 'No, I don’t have any', value: 'no'},
+              ]}
+              value={selectedOptions.haveInsurance}
+              onSelect={item =>
+                setSelectedOptions({
+                  ...selectedOptions,
+                  haveInsurance: item.value,
+                })
+              }
               placeholder="Pick an answer"
             />
-            <Input2
+
+            <SelectInput
               label="have you Budgeted before?"
+              data={[
+                {label: 'Yes, I have', value: 'yes'},
+                {label: 'No, not yet', value: 'no'},
+              ]}
+              value={selectedOptions.budgetedBefore}
+              onSelect={item =>
+                setSelectedOptions({
+                  ...selectedOptions,
+                  budgetedBefore: item.value,
+                })
+              }
               placeholder="Pick an answer"
             />
-            <Input2
+
+            <SelectInput
               label="Which budget method do you prefer?"
+              data={[
+                {label: 'Yes, I have', value: 'yes'},
+                {label: 'No, I’m new to budgeting', value: 'no'},
+              ]}
+              value={selectedOptions.preferBudgetMethod}
+              onSelect={item =>
+                setSelectedOptions({
+                  ...selectedOptions,
+                  preferBudgetMethod: item.value,
+                })
+              }
               placeholder="Pick an answer"
             />
           </View>

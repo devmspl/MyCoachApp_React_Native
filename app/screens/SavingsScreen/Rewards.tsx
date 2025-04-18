@@ -6,7 +6,6 @@ import {MyText} from '../../components/MyText';
 import {COLORS, FONT_SIZE, FONT_WEIGHT} from '../../styles';
 import * as Progress from 'react-native-progress';
 import Foundation from 'react-native-vector-icons/Foundation';
-import {Shadow} from 'react-native-shadow-2';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import BadgeIcon from '../../../assets/svg/Badge.svg';
 

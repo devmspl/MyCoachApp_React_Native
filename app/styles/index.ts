@@ -25,6 +25,7 @@ const COLORS = {
   lavender:'#A577FF',
   metalgray:'#3C4142',
   
+  green: '#29715B',
   greenTeal: '#00C059',
 }
 export { globalStyles, COLORS };

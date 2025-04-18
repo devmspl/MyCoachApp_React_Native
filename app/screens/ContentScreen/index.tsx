@@ -14,6 +14,7 @@ import {
   Animated,
   Platform,
   Pressable,
+  ActivityIndicator,
 } from 'react-native';
 import {Video as VideoComponent, VideoRef} from 'react-native-video';
 import {COLORS, DH, DW, FONT_SIZE, FONT_WEIGHT} from '../../styles';
@@ -23,10 +24,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {setIsContentScreenFocued} from '../../redux/feature/content/contentSlice';
 import {RootState} from '../../redux';
 import AntDesign from 'react-native-vector-icons/AntDesign';
-import ImagePicker, {
-  CameraOptions,
-  launchCamera,
-} from 'react-native-image-picker';
+import {CameraOptions, launchCamera} from 'react-native-image-picker';
 import {requestCameraPermission} from '../../utils/permission';
 import Octicons from 'react-native-vector-icons/Octicons';
 
@@ -127,6 +125,9 @@ const ContentScreen = () => {
   const videoRef = React.useRef<VideoRef[]>([]);
   const [currentIndex, setCurrentIndex] = React.useState(0);
   const [isLiked, setIsLiked] = React.useState(false);
+  const [videoOnLoad, setVideoOnLoad] = React.useState<{[key: string]: any}>(
+    {},
+  );
 
   const animatedButton = React.useRef(new Animated.Value(0)).current;
 
@@ -134,7 +135,10 @@ const ContentScreen = () => {
     (state: RootState) => state.content,
   );
 
-  const onVideoEnd = () => {
+  const onVideoEnd = (id: string) => {
+    if (id) {
+      setVideoOnLoad(prev => ({...prev, [id]: false}))
+    }
     if (currentIndex < videos.length - 1) {
       flatListRef.current.scrollToIndex({
         index: currentIndex + 1,
@@ -208,6 +212,7 @@ const ContentScreen = () => {
 
   React.useEffect(() => {
     const handleAppStateChange = (state: string) => {
+      console.log('videoRef.current', videoRef.current);
       const shouldPouse = state !== 'active' || !isContentScreenFocued;
       if (shouldPouse) {
         videoRef.current[currentIndex]?.pause();
@@ -235,13 +240,16 @@ const ContentScreen = () => {
             source={{uri: item.video_url}}
             resizeMode="cover"
             repeat={false}
-            onEnd={onVideoEnd}
+            onEnd={() => onVideoEnd(item.id)}
             paused={
               currentIndex !== index || !isContentScreenFocued || !isFocused
             }
             style={styles.video}
             muted={false}
             volume={1}
+            onBuffer={({ isBuffering }) =>
+              setVideoOnLoad(prev => ({...prev, [item.id]: isBuffering}))
+            } 
           />
         </TouchableWithoutFeedback>
 
@@ -271,6 +279,14 @@ const ContentScreen = () => {
             />
           </TouchableOpacity>
         </View>
+
+        {videoOnLoad[item.id] && (
+          <ActivityIndicator
+            size="large"
+            color={COLORS.white}
+            style={styles.loader}
+          />
+        )}
 
         <TouchableOpacity
           style={styles.playButton}
@@ -396,7 +412,7 @@ const styles = StyleSheet.create({
   videoContainer: {
     flex: 1,
     width: DW,
-    height: DH,
+    height: Platform.OS === 'ios' ? DH : DH * 0.8829,
     backgroundColor: '#000',
     position: 'relative',
   },
@@ -421,11 +437,21 @@ const styles = StyleSheet.create({
     resizeMode: 'contain',
     marginRight: 20,
   },
+  loader: {
+    position: 'absolute',
+    zIndex: 3,
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   playButton: {
     position: 'absolute',
     zIndex: 2,
     width: DW,
-    height: DH * 0.91,
+    height: DH * 0.8,
     backgroundColor: 'transparent',
     flexDirection: 'row',
     alignItems: 'center',

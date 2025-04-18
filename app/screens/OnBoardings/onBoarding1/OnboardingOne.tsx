@@ -1,20 +1,20 @@
 import {SafeAreaView, ScrollView, StyleSheet, Text, View} from 'react-native';
 import React, {useCallback, useState} from 'react';
-import MainLayout from '../../components/MainLayout';
+import MainLayout from '../../../components/MainLayout';
 import AntDesign from 'react-native-vector-icons/AntDesign';
-import {COLORS, FONT_SIZE, FONT_WEIGHT} from '../../styles';
+import {COLORS, FONT_SIZE, FONT_WEIGHT} from '../../../styles';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import {RootStackParams} from '../../navigation/types';
+import {RootStackParams} from '../../../navigation/types';
 import {useNavigation} from '@react-navigation/native';
-import {MyText} from '../../components/MyText';
-import Input from '../../components/Input';
-import PrimaryBtn from '../../components/PrimaryBtn';
+import {MyText} from '../../../components/MyText';
+import Input from '../../../components/Input';
+import PrimaryBtn from '../../../components/PrimaryBtn';
 import Slider from 'rn-range-slider';
-import Thumb from '../../components/Slider/Thumb';
-import Rail from '../../components/Slider/Rail';
-import RailSelected from '../../components/Slider/RailSelected';
-import Label from '../../components/Slider/Label';
-import Notch from '../../components/Slider/Notch';
+import Thumb from '../../../components/Slider/Thumb';
+import Rail from '../../../components/Slider/Rail';
+import RailSelected from '../../../components/Slider/RailSelected';
+import Label from '../../../components/Slider/Label';
+import Notch from '../../../components/Slider/Notch';
 
 const OnboardingOne = () => {
   const navigation =
@@ -53,8 +53,7 @@ const OnboardingOne = () => {
               color="black"
             />
             <View style={styles.slideView}>
-              <View style={styles.btn}></View>
-              <View style={styles.btn}></View>
+              <View style={[styles.btn, {backgroundColor: COLORS.primary}]}></View>
               <View style={styles.btn}></View>
               <View style={styles.btn}></View>
               <View style={styles.btn}></View>

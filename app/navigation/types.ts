@@ -6,6 +6,7 @@ export type RootStackParams = {
   OnboardingThree: undefined;
   OnboardingFour: undefined;
   OnboardingFive: undefined;
+  PlaidBankSelection: undefined;
   Welcome: undefined;
   Signup: undefined;
   PrivacyPolicy: undefined;

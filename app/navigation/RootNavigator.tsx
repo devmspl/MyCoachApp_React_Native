@@ -18,11 +18,12 @@ import {useDispatch, useSelector} from 'react-redux';
 import {setAuth, tokenSelector} from '../redux/feature/auth/authSlice';
 import WelcomeScreen from '../screens/WelcomeScreen';
 import SplashScreen from '../screens/SplashScreen';
-import OnboardingOne from '../screens/OnBoardings/OnboardingOne';
-import OnboardingTwo from '../screens/OnBoardings/OnboardingTwo';
-import OnboardingThree from '../screens/OnBoardings/OnboardingThree';
-import OnboardingFour from '../screens/OnBoardings/OnboardingFour';
-import OnboardingFive from '../screens/OnBoardings/OnboardingFive';
+import OnboardingOne from '../screens/OnBoardings/onBoarding1/OnboardingOne';
+import OnboardingTwo from '../screens/OnBoardings/onBoarding2/OnboardingTwo';
+import OnboardingThree from '../screens/OnBoardings/onBoarding3/OnboardingThree';
+import OnboardingFour from '../screens/OnBoardings/onBoarding3/QuizQuestionairre';
+import OnboardingFive from '../screens/OnBoardings/onBoarding4/OnboardingFour';
+import PlaidBankSelectionScreen from '../screens/OnBoardings/onBoarding4/PlaidBankSelection';
 
 const Stack = createNativeStackNavigator<RootStackParams>();
 
@@ -49,6 +50,7 @@ const RootNavigator = ({localAuth, isFirstTimeOpen}: any) => {
           <Stack.Screen name="OnboardingThree" component={OnboardingThree} />
           <Stack.Screen name="OnboardingFour" component={OnboardingFour} />
           <Stack.Screen name="OnboardingFive" component={OnboardingFive} />
+          <Stack.Screen name='PlaidBankSelection' component={PlaidBankSelectionScreen} />
           <Stack.Screen
             name="ForgotPassword"
             component={ForgotPasswordScreen}

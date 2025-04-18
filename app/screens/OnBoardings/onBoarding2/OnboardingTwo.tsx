@@ -1,13 +1,13 @@
 import {ScrollView, StyleSheet, Text, View} from 'react-native';
 import React, {useCallback, useState} from 'react';
-import MainLayout from '../../components/MainLayout';
+import MainLayout from '../../../components/MainLayout';
 import AntDesign from 'react-native-vector-icons/AntDesign';
-import {COLORS, FONT_SIZE, FONT_WEIGHT} from '../../styles';
+import {COLORS, FONT_SIZE, FONT_WEIGHT} from '../../../styles';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import {RootStackParams} from '../../navigation/types';
+import {RootStackParams} from '../../../navigation/types';
 import {useNavigation} from '@react-navigation/native';
-import {MyText} from '../../components/MyText';
-import PrimaryBtn from '../../components/PrimaryBtn';
+import {MyText} from '../../../components/MyText';
+import PrimaryBtn from '../../../components/PrimaryBtn';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import Slider from '@react-native-assets/slider';
 
@@ -46,7 +46,7 @@ const Item = ({
             onPress={onSelect}
             name={isSelected ? 'radio-btn-active' : 'radio-btn-passive'}
             size={20}
-            color={isSelected ? COLORS.primary : COLORS.grey}
+            color={isSelected ? COLORS.green : COLORS.grey}
           />
         </View>
       </View>
@@ -61,6 +61,11 @@ const OnboardingTwo = () => {
 
   const [numberOfKids, setNumberOfKids] = useState(1);
 
+  const onBack = () => {
+    navigation.navigate('OnboardingOne');
+  };
+  
+
   return (
     <MainLayout>
       <ScrollView contentContainerStyle={{paddingHorizontal: 20, flex: 1}}>
@@ -74,7 +79,7 @@ const OnboardingTwo = () => {
               marginHorizontal: 20,
             }}>
             <AntDesign
-              onPress={() => navigation.goBack()}
+              onPress={onBack}
               name="arrowleft"
               size={24}
               color="black"
@@ -82,8 +87,8 @@ const OnboardingTwo = () => {
             <View style={styles.slideView}>
               <View
                 style={[styles.btn, {backgroundColor: COLORS.primary}]}></View>
-              <View style={styles.btn}></View>
-              <View style={styles.btn}></View>
+              <View
+                style={[styles.btn, {backgroundColor: COLORS.primary}]}></View>
               <View style={styles.btn}></View>
               <View style={styles.btn}></View>
             </View>
