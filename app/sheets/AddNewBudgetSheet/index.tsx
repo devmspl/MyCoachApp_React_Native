@@ -1,4 +1,10 @@
-import {FlatList, TouchableOpacity, StyleSheet, TextInput} from 'react-native';
+import {
+  FlatList,
+  TouchableOpacity,
+  StyleSheet,
+  TextInput,
+  ScrollView,
+} from 'react-native';
 import React from 'react';
 import ActionSheet, {SheetManager} from 'react-native-actions-sheet';
 import {SHEETS} from '../sheets';
@@ -14,6 +20,26 @@ import PrimaryBtn from '../../components/PrimaryBtn';
 import {Pressable} from 'react-native';
 import {getRandomColor} from '../../utils/helper';
 import * as Progress from 'react-native-progress';
+import Slider from 'rn-range-slider';
+import Thumb from '../../components/Slider/Thumb';
+import Rail from '../../components/Slider/Rail';
+import RailSelected from '../../components/Slider/RailSelected';
+import Label from '../../components/Slider/Label';
+import Notch from '../../components/Slider/Notch';
+
+const colorCodes = [
+  '#077A7D',
+  '#CF0F47',
+  '#6F826A',
+  '#A6D6D6',
+  '#328E6E',
+  '#E2F8F2',
+  '#D9E8E2',
+  '#FF9149',
+  '#1B56FD',
+  '#735557',
+];
+
 
 const AddNewBudgetSheet = (props: any) => {
   const navigation =
@@ -22,6 +48,29 @@ const AddNewBudgetSheet = (props: any) => {
   const close = () => {
     SheetManager.hide(SHEETS.AddNewBudgetSheet);
   };
+
+  const [selectedColor, setSelectedColor] = React.useState<string>(
+    colorCodes[0],
+  );
+  const [openColorPicker, setOpenColorPicker] = React.useState<boolean>(false);
+  const [low, setLow] = React.useState(10);
+  const [high, setHigh] = React.useState(800);
+  const [min, setMin] = React.useState(10);
+  const [max, setMax] = React.useState(2000);
+
+  const renderThumb = React.useCallback(() => <Thumb />, []);
+  const renderRail = React.useCallback(() => <Rail />, []);
+  const renderRailSelected = React.useCallback(() => <RailSelected />, []);
+  const renderLabel = React.useCallback(
+    (value: any) => <Label text={value} />,
+    [],
+  );
+  const renderNotch = React.useCallback(() => <Notch />, []);
+
+  const handleValueChange = React.useCallback(({low, high}: any) => {
+    setLow(low);
+    setHigh(high);
+  }, []);
   return (
     <ActionSheet id={props.sheetId} gestureEnabled>
       <View style={{paddingBottom: 20}}>
@@ -129,6 +178,82 @@ const AddNewBudgetSheet = (props: any) => {
               <AntDesign name="plus" size={15} color={COLORS.primary} />
               <MyText color={COLORS.primary}>Add Sub Category</MyText>
             </TouchableOpacity>
+
+            <TouchableOpacity
+              style={styles.colorPickerInput}
+              onPress={() => setOpenColorPicker(!openColorPicker)}>
+              <MyText bold={FONT_WEIGHT.normal}>Pick a Budget Color </MyText>
+              <View style={styles.colorPicker}>
+                <View
+                  style={[
+                    styles.selectedColor,
+                    {backgroundColor: selectedColor || COLORS.primary},
+                  ]}
+                />
+                <EvilIcons name="chevron-down" size={35} color={COLORS.black} />
+              </View>
+            </TouchableOpacity>
+            {openColorPicker && (
+              <View>
+                <ScrollView>
+                  <View style={styles.colorContainer}>
+                    {colorCodes.map((item, index) => {
+                      return (
+                        <Pressable
+                          key={index}
+                          style={[styles.colorView, {backgroundColor: item}]}
+                          onPress={() => {
+                            setSelectedColor(item);
+                            setOpenColorPicker(false);
+                          }}></Pressable>
+                      );
+                    })}
+                  </View>
+                </ScrollView>
+              </View>
+            )}
+
+            <View style={styles.budgetContainer}>
+              <MyText bold={FONT_WEIGHT.semibold} size={FONT_SIZE.l}>
+                Budget
+              </MyText>
+
+              <Slider
+                low={low}
+                high={high}
+                min={min}
+                max={max}
+                step={1}
+                floatingLabel
+                renderThumb={renderThumb}
+                renderRail={renderRail}
+                renderRailSelected={renderRailSelected}
+                renderLabel={renderLabel}
+                renderNotch={renderNotch}
+                onValueChanged={handleValueChange}
+              />
+
+              <View style={styles.budgetView}>
+                <View style={styles.budget}>
+                  <MyText bold={FONT_WEIGHT.normal} size={FONT_SIZE.l}>
+                    Minimum
+                  </MyText>
+                  <View style={styles.budgetValue}>
+                    <MyText bold={FONT_WEIGHT.semibold}>$10</MyText>
+                  </View>
+                </View>
+
+                <View style={styles.budget}>
+                  <MyText bold={FONT_WEIGHT.normal} size={FONT_SIZE.l}>
+                    Maximum
+                  </MyText>
+                  <View style={styles.budgetValue}>
+                    <MyText bold={FONT_WEIGHT.semibold}>$2,000</MyText>
+                  </View>
+                </View>
+              </View>
+            </View>
+
             <PrimaryBtn containerStyle={{marginTop: 30}} text="Confirm" />
           </View>
         )}
@@ -179,6 +304,64 @@ const styles = StyleSheet.create({
     borderRadius: 35,
     backgroundColor: 'white',
     alignItems: 'center',
+    justifyContent: 'center',
+  },
+  colorPicker: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  colorPickerInput: {
+    width: '100%',
+    height: 50,
+    borderRadius: 10,
+    marginVertical: 20,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingHorizontal: 10,
+  },
+  selectedColor: {
+    width: 30,
+    height: 30,
+    borderRadius: 50,
+  },
+  colorContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
+    gap: 10,
+    padding: 20,
+    maxHeight: 300,
+    backgroundColor: COLORS.lightgrey,
+    borderRadius: 10,
+    overflow: 'scroll',
+  },
+  colorView: {
+    width: 50,
+    height: 50,
+    borderRadius: 50,
+  },
+  budgetContainer: {
+    flexDirection: 'column',
+    gap: 10,
+  },
+  budgetView: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  budget: {
+    flexDirection: 'column',
+    alignItems: 'center',
+    gap: 5,
+  },
+  budgetValue: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: COLORS.lightgrey,
+    borderRadius: 10,
+    width: 120,
+    height: 40,
     justifyContent: 'center',
   },
 });

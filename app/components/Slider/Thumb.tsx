@@ -14,15 +14,13 @@ const styles = StyleSheet.create({
     height: THUMB_RADIUS_LOW * 2,
     borderRadius: THUMB_RADIUS_LOW,
     backgroundColor: 'white',
-    // borderWidth: 2,
-    // borderColor: '#7f7af7f',
   },
   rootHigh: {
     width: THUMB_RADIUS_HIGH * 2,
     height: THUMB_RADIUS_HIGH * 2,
     borderRadius: THUMB_RADIUS_HIGH,
-    // borderWidth: 5,
-    // borderColor: '#7f7f7f',
+    borderWidth: 5,
+    borderColor: '#7f7f7f',
     backgroundColor: 'white',
   },
 });

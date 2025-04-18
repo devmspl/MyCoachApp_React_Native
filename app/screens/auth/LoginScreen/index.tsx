@@ -187,6 +187,24 @@ const LoginScreen = () => {
                 />
               </View>
 
+              {/* Password */}
+              <View style={styles.inputView}>
+                <Entypo name="key" size={20} color={COLORS.darkgrey} />
+                <TextInput
+                  style={styles.input}
+                  placeholder="Password"
+                  placeholderTextColor={COLORS.darkgrey}
+                  secureTextEntry={!isPasswordVisible}
+                />
+                {/* <Feather
+              style={{}}
+              onPress={() => setIsPasswordVisible(!isPasswordVisible)}
+              name={isPasswordVisible ? 'eye' : 'eye-off'}
+              size={20}
+              color={'gray'}
+            /> */}
+              </View>
+
               <View
                 style={{
                   flexDirection: 'row',

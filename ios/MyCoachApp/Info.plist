@@ -73,5 +73,6 @@
 	<string>Allow Photo Access</string>
 	<key>NSCameraUsageDescription</key>
 	<string>Allow Camera Access</string>
+
 </dict>
 </plist>

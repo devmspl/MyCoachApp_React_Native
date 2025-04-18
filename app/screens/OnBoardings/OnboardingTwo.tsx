@@ -1,5 +1,5 @@
-import {ScrollView, StyleSheet, View,} from 'react-native';
-import React, { useCallback, useState } from 'react';
+import {ScrollView, StyleSheet, Text, View} from 'react-native';
+import React, {useCallback, useState} from 'react';
 import MainLayout from '../../components/MainLayout';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import {COLORS, FONT_SIZE, FONT_WEIGHT} from '../../styles';
@@ -9,8 +9,7 @@ import {useNavigation} from '@react-navigation/native';
 import {MyText} from '../../components/MyText';
 import PrimaryBtn from '../../components/PrimaryBtn';
 import Fontisto from 'react-native-vector-icons/Fontisto';
-import Slider from 'rn-range-slider';
-
+import Slider from '@react-native-assets/slider';
 
 const options = [
   {id: 1, name: 'Married'},
@@ -19,7 +18,6 @@ const options = [
   {id: 4, name: 'Married-no kids'},
   {id: 5, name: 'Married-yoiung kids'},
 ];
-
 const Item = ({
   name,
   onSelect,
@@ -32,7 +30,9 @@ const Item = ({
   return (
     <View>
       <View style={styles.row}>
-        <MyText style={{flex: 1}}>{name}</MyText>
+        <MyText style={{flex: 1}} color={'gray'}>
+          {name}
+        </MyText>
         <View
           style={{
             height: 20,
@@ -59,7 +59,7 @@ const OnboardingTwo = () => {
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
   const [selectedId, setSelectedId] = React.useState<null | number>(1);
 
-
+  const [numberOfKids, setNumberOfKids] = useState(1);
 
   return (
     <MainLayout>
@@ -71,6 +71,7 @@ const OnboardingTwo = () => {
               flexDirection: 'row',
               alignItems: 'center',
               justifyContent: 'space-between',
+              marginHorizontal: 20,
             }}>
             <AntDesign
               onPress={() => navigation.goBack()}
@@ -112,14 +113,29 @@ const OnboardingTwo = () => {
               />
             ))}
           </View>
-
-        
+          <View>
+            <MyText bold={FONT_WEIGHT.semibold}>Number of Kids</MyText>
+            <View style={{}}></View>
+            <Slider
+              value={numberOfKids}
+              onValueChange={setNumberOfKids}
+              minimumValue={0}
+              maximumValue={5}
+              step={1}
+              thumbSize={24}
+              trackHeight={13}
+              minimumTrackTintColor="#4CAF50"
+              maximumTrackTintColor="#E0E0E0"
+              thumbTintColor="#FFFFFF"
+            />
+            <MyText>{numberOfKids} kids</MyText>
+          </View>
+          <PrimaryBtn
+            onPress={() => navigation.navigate('OnboardingThree')}
+            containerStyle={{marginVertical: 20, marginTop: 100}}
+            text="Confirm"
+          />
         </View>
-        <PrimaryBtn
-          onPress={() => navigation.navigate('OnboardingThree')}
-          containerStyle={{marginVertical: 20}}
-          text="Confirm"
-        />
       </ScrollView>
     </MainLayout>
   );
@@ -148,5 +164,24 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     width: '100%',
     marginTop: 10,
+  },
+  slider: {
+    width: '80%',
+    height: 40,
+  },
+  floatingLabel: {
+    position: 'absolute',
+    top: -35,
+    transform: [{translateX: -25}],
+    backgroundColor: 'white',
+    paddingVertical: 4,
+    paddingHorizontal: 10,
+    borderRadius: 8,
+    elevation: 2,
+    shadowColor: '#000',
+    shadowOffset: {width: 0, height: 1},
+    shadowOpacity: 0.2,
+    shadowRadius: 2,
+    marginTop: 50,
   },
 });

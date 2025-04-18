@@ -14,6 +14,10 @@ const AppInit = () => {
   const [ready, setReady] = React.useState(false);
   const [isFirstTimeOpen, setIsFirstTimeOpen] = React.useState(false);
   const dispatch = useDispatch();
+  
+  // React.useEffect(() => {
+  //   AsyncStorage.clear();
+  // },[])
   const init = async () => {
     try {
       const localAuthData = await getLocalUser();

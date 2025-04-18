@@ -11,14 +11,24 @@ import {
   TouchableHighlight,
   AppState,
   TouchableWithoutFeedback,
+  Animated,
+  Platform,
+  Pressable,
 } from 'react-native';
 import {Video as VideoComponent, VideoRef} from 'react-native-video';
 import {COLORS, DH, DW, FONT_SIZE, FONT_WEIGHT} from '../../styles';
 import {MyText} from '../../components/MyText';
-import {useIsFocused} from '@react-navigation/native';
+import {useIsFocused, useNavigation} from '@react-navigation/native';
 import {useDispatch, useSelector} from 'react-redux';
 import {setIsContentScreenFocued} from '../../redux/feature/content/contentSlice';
 import {RootState} from '../../redux';
+import AntDesign from 'react-native-vector-icons/AntDesign';
+import ImagePicker, {
+  CameraOptions,
+  launchCamera,
+} from 'react-native-image-picker';
+import {requestCameraPermission} from '../../utils/permission';
+import Octicons from 'react-native-vector-icons/Octicons';
 
 const videos = [
   {
@@ -110,11 +120,15 @@ const videos = [
 ];
 
 const ContentScreen = () => {
+  const navigation = useNavigation();
   const isFocused = useIsFocused();
   const dispatch = useDispatch();
   const flatListRef = React.useRef<any>(null);
   const videoRef = React.useRef<VideoRef[]>([]);
   const [currentIndex, setCurrentIndex] = React.useState(0);
+  const [isLiked, setIsLiked] = React.useState(false);
+
+  const animatedButton = React.useRef(new Animated.Value(0)).current;
 
   const {isContentScreenFocued} = useSelector(
     (state: RootState) => state.content,
@@ -146,6 +160,52 @@ const ContentScreen = () => {
     currentVideo?.seek(0);
   };
 
+  const buttonStyle = {
+    opacity: animatedButton.interpolate({
+      inputRange: [0, 1],
+      outputRange: [0, 1],
+    }),
+    transform: [
+      {
+        scale: animatedButton.interpolate({
+          inputRange: [0, 1],
+          outputRange: [1, 1.3],
+        }),
+      },
+    ],
+  };
+
+  const onCameraClick = async () => {
+    const hasPermission = await requestCameraPermission();
+    if (!hasPermission) return;
+
+    const options: CameraOptions = {
+      mediaType: 'video',
+      videoQuality: 'high',
+      durationLimit: 30,
+      saveToPhotos: true,
+    };
+
+    launchCamera(options, res => {
+      if (res.assets && res.assets.length > 0) {
+        const asset = res.assets[0];
+        console.log('vdo file info:', asset);
+      }
+    });
+  };
+
+  React.useEffect(() => {
+    dispatch(setIsContentScreenFocued(isFocused));
+  }, []);
+
+  React.useEffect(() => {
+    Animated.timing(animatedButton, {
+      toValue: !isContentScreenFocued ? 1 : 0,
+      duration: 300,
+      useNativeDriver: true,
+    }).start();
+  }, [isContentScreenFocued]);
+
   React.useEffect(() => {
     const handleAppStateChange = (state: string) => {
       const shouldPouse = state !== 'active' || !isContentScreenFocued;
@@ -166,28 +226,10 @@ const ContentScreen = () => {
     };
   }, [currentIndex, videoRef]);
 
-  React.useEffect(() => {
-    dispatch(setIsContentScreenFocued(isFocused));
-  }, []);
-
   const renderItem = ({item, index}: any) => {
-    console.log(
-      'index === currentIndex',
-      index === currentIndex,
-      index,
-      currentIndex,
-    );
-    // if (index === currentIndex) {
-    //   dispatch(setIsContentScreenFocued(false));
-    // } else {
-    //   dispatch(setIsContentScreenFocued(true));
-    // }
     return (
       <View style={styles.videoContainer}>
-        <TouchableWithoutFeedback
-          onPress={() => {
-            dispatch(setIsContentScreenFocued(!isContentScreenFocued));
-          }}>
+        <TouchableWithoutFeedback onPress={() => {}}>
           <VideoComponent
             ref={e => handleVideoRef(e, index)}
             source={{uri: item.video_url}}
@@ -202,6 +244,49 @@ const ContentScreen = () => {
             volume={1}
           />
         </TouchableWithoutFeedback>
+
+        <View style={styles.headerContainer}>
+          <TouchableOpacity
+            onPress={() => {
+              navigation.goBack();
+            }}>
+            <Image
+              source={require('../../../assets/icon/white-back.png')}
+              style={styles.headerIcon}
+              resizeMode="contain"
+            />
+          </TouchableOpacity>
+          <MyText
+            bold={FONT_WEIGHT.bold}
+            size={FONT_SIZE.xl}
+            color={COLORS.white}>
+            Montage
+          </MyText>
+
+          <TouchableOpacity onPress={onCameraClick}>
+            <Image
+              source={require('../../../assets/icon/white-camera.png')}
+              style={styles.headerIcon}
+              resizeMode="contain"
+            />
+          </TouchableOpacity>
+        </View>
+
+        <TouchableOpacity
+          style={styles.playButton}
+          onPress={() => {
+            dispatch(setIsContentScreenFocued(!isContentScreenFocued));
+          }}>
+          <Animated.View style={buttonStyle}>
+            <Text>
+              {isContentScreenFocued ? (
+                <AntDesign name="pausecircle" size={60} color="white" />
+              ) : (
+                <AntDesign name="play" size={60} color="white" />
+              )}
+            </Text>
+          </Animated.View>
+        </TouchableOpacity>
 
         <View style={styles.videoDetails}>
           {item.sound && (
@@ -223,10 +308,7 @@ const ContentScreen = () => {
                   borderWidth: 2,
                 },
               ]}>
-              <Image
-                source={{uri: item.avatar}}
-                style={[styles.avatar, item.hasStatus && {padding: 10}]}
-              />
+              <Image source={{uri: item.avatar}} style={[styles.avatar]} />
             </TouchableHighlight>
             <Text style={styles.username}>{item.username}</Text>
             {item.isVarified && (
@@ -253,13 +335,16 @@ const ContentScreen = () => {
         </View>
 
         <View style={styles.actionButtons}>
-          <TouchableOpacity style={styles.iconButton}>
-            <Image
-              source={require('../../../assets/icon/white-heart.png')}
-              style={styles.icon}
+          <Pressable
+            style={styles.iconButton}
+            onPress={() => setIsLiked(!isLiked)}>
+            <Octicons
+              name={isLiked ? 'heart-fill' : 'heart'}
+              size={28}
+              color={isLiked ? 'red' : 'white'}
             />
             <Text style={styles.iconText}>{item.likes}</Text>
-          </TouchableOpacity>
+          </Pressable>
           <TouchableOpacity style={styles.iconButton}>
             <Image
               source={require('../../../assets/icon/white-comment.png')}
@@ -311,7 +396,7 @@ const styles = StyleSheet.create({
   videoContainer: {
     flex: 1,
     width: DW,
-    height: DH * 0.8815,
+    height: DH,
     backgroundColor: '#000',
     position: 'relative',
   },
@@ -320,8 +405,36 @@ const styles = StyleSheet.create({
     height: '100%',
     position: 'absolute',
   },
+  headerContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    position: 'absolute',
+    zIndex: 3,
+    width: DW,
+    top: Platform.OS === 'ios' ? 70 : 50,
+    paddingHorizontal: 10,
+  },
+  headerIcon: {
+    width: 35,
+    height: 35,
+    resizeMode: 'contain',
+    marginRight: 20,
+  },
+  playButton: {
+    position: 'absolute',
+    zIndex: 2,
+    width: DW,
+    height: DH * 0.91,
+    backgroundColor: 'transparent',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    opacity: 0.8,
+  },
   videoDetails: {
     position: 'absolute',
+    zIndex: 3,
     bottom: 20,
     left: 15,
     gap: 10,
@@ -346,15 +459,17 @@ const styles = StyleSheet.create({
     gap: 10,
   },
   avatarContainer: {
-    width: 50,
-    height: 50,
-    borderRadius: 25,
+    width: 60,
+    height: 60,
+    borderRadius: 50,
     overflow: 'hidden',
   },
   avatar: {
     width: '100%',
     height: '100%',
     resizeMode: 'cover',
+    borderWidth: 5,
+    borderColor: 'transparent',
   },
   username: {
     color: COLORS.white,
@@ -381,6 +496,7 @@ const styles = StyleSheet.create({
   },
   actionButtons: {
     position: 'absolute',
+    zIndex: 3,
     right: 15,
     bottom: 0,
     alignItems: 'center',
