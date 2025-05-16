@@ -1,15 +1,14 @@
-import {SafeAreaView, ScrollView, StyleSheet, Text, View} from 'react-native';
+import {ScrollView, StyleSheet, TouchableOpacity, View} from 'react-native';
 import React from 'react';
 import MainLayout from '../../../components/MainLayout';
 import AntDesign from 'react-native-vector-icons/AntDesign';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {COLORS, FONT_SIZE, FONT_WEIGHT} from '../../../styles';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {RootStackParams} from '../../../navigation/types';
 import {useNavigation} from '@react-navigation/native';
 import {MyText} from '../../../components/MyText';
-import Input from '../../../components/Input';
 import PrimaryBtn from '../../../components/PrimaryBtn';
-import Input2 from '../../../components/Input2';
 import SelectInput from '../../../components/SelectInput';
 
 const OnboardingThree = () => {
@@ -33,18 +32,26 @@ const OnboardingThree = () => {
               alignItems: 'center',
               justifyContent: 'space-between',
             }}>
-            <AntDesign
+            <TouchableOpacity
               onPress={() => navigation.goBack()}
-              name="arrowleft"
-              size={24}
-              color="black"
-            />
+              style={{
+                height: 40,
+                width: 40,
+                backgroundColor: 'white',
+                borderRadius: 35,
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}>
+              <MaterialIcons name="arrow-back" size={25} color={COLORS.black} />
+            </TouchableOpacity>
             <View style={styles.slideView}>
               <View
                 style={[styles.btn, {backgroundColor: COLORS.primary}]}></View>
               <View
                 style={[styles.btn, {backgroundColor: COLORS.primary}]}></View>
-              <View style={[styles.btn, {backgroundColor: COLORS.primary}]}></View>
+              <View
+                style={[styles.btn, {backgroundColor: COLORS.primary}]}></View>
+              <View style={styles.btn}></View>
               <View style={styles.btn}></View>
             </View>
             <AntDesign name="arrowleft" size={1} color="white" />
@@ -97,7 +104,7 @@ const OnboardingThree = () => {
             />
 
             <SelectInput
-              label="have you Budgeted before?"
+              label="Have you Budgeted before?"
               data={[
                 {label: 'Yes, I have', value: 'yes'},
                 {label: 'No, not yet', value: 'no'},

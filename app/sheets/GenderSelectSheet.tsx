@@ -3,13 +3,7 @@ import React from 'react';
 import ActionSheet, {SheetManager} from 'react-native-actions-sheet';
 
 import {SHEETS} from './sheets';
-import EvilIcons from 'react-native-vector-icons/EvilIcons';
-import Ionicons from 'react-native-vector-icons/Ionicons';
-import Feather from 'react-native-vector-icons/Feather';
-import {View} from 'react-native';
-import {COLORS} from '../styles';
-import {RegularText} from '../components/MyText';
-import {useNavigation} from '@react-navigation/native';
+
 
 const options = [
   {name: 'Female', value: 'Female'},

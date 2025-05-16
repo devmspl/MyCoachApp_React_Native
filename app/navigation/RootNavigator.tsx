@@ -6,12 +6,9 @@ import {
 import LoginScreen from '../screens/auth/LoginScreen';
 import MainTabNavigator from './MainTabNavigator';
 import OnBoardingScreen from '../screens/OnBoardingScreen';
-import SignupScreen from '../screens/auth/SignUpScreen';
 import ForgotPasswordScreen from '../screens/auth/ForgotPasswordScreen';
 import VerifyOtpScreen from '../screens/auth/VerifyOtpScreen';
 import SetNewPasswordScreen from '../screens/auth/SetNewPasswordScreen';
-import SettingScreen from '../screens/SettingScreen';
-
 import {RootStackParams} from './types';
 import {useNavigation} from '@react-navigation/native';
 import {useDispatch, useSelector} from 'react-redux';
@@ -21,9 +18,9 @@ import SplashScreen from '../screens/SplashScreen';
 import OnboardingOne from '../screens/OnBoardings/onBoarding1/OnboardingOne';
 import OnboardingTwo from '../screens/OnBoardings/onBoarding2/OnboardingTwo';
 import OnboardingThree from '../screens/OnBoardings/onBoarding3/OnboardingThree';
-import OnboardingFour from '../screens/OnBoardings/onBoarding3/QuizQuestionairre';
-import OnboardingFive from '../screens/OnBoardings/onBoarding4/OnboardingFour';
-import PlaidBankSelectionScreen from '../screens/OnBoardings/onBoarding4/PlaidBankSelection';
+import OnboardingFour from '../screens/OnBoardings/onBoarding4/OnboardingFour';
+import OnboardingFive from '../screens/OnBoardings/onBoarding5/OnboardingFive';
+import BankSelectionScreen from '../screens/OnBoardings/onBoarding5/BankSelectionScreen';
 
 const Stack = createNativeStackNavigator<RootStackParams>();
 
@@ -44,13 +41,12 @@ const RootNavigator = ({localAuth, isFirstTimeOpen}: any) => {
           <Stack.Screen name="OnBoarding" component={OnBoardingScreen} />
           <Stack.Screen name="Welcome" component={WelcomeScreen} />
           <Stack.Screen name="Login" component={LoginScreen} />
-          <Stack.Screen name="Signup" component={SignupScreen} />
           <Stack.Screen name="OnboardingOne" component={OnboardingOne} />
           <Stack.Screen name="OnboardingTwo" component={OnboardingTwo} />
           <Stack.Screen name="OnboardingThree" component={OnboardingThree} />
           <Stack.Screen name="OnboardingFour" component={OnboardingFour} />
           <Stack.Screen name="OnboardingFive" component={OnboardingFive} />
-          <Stack.Screen name='PlaidBankSelection' component={PlaidBankSelectionScreen} />
+          <Stack.Screen name="BankSelection" component={BankSelectionScreen} />
           <Stack.Screen
             name="ForgotPassword"
             component={ForgotPasswordScreen}

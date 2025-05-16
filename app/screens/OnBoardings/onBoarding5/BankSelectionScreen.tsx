@@ -69,7 +69,7 @@ const BANKS: Bank[] = [
   },
 ];
 
-const PlaidBankSelectionScreen = () => {
+const BankSelectionScreen = () => {
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
   const [searchQuery, setSearchQuery] = React.useState('');
@@ -318,4 +318,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default PlaidBankSelectionScreen;
+export default BankSelectionScreen;

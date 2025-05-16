@@ -174,6 +174,7 @@ const ContentScreen = () => {
         scale: animatedButton.interpolate({
           inputRange: [0, 1],
           outputRange: [1, 1.3],
+          
         }),
       },
     ],
@@ -412,7 +413,7 @@ const styles = StyleSheet.create({
   videoContainer: {
     flex: 1,
     width: DW,
-    height: Platform.OS === 'ios' ? DH : DH * 0.8829,
+    height: Platform.OS === 'ios' ? DH * 0.91 : DH * 0.8829,
     backgroundColor: '#000',
     position: 'relative',
   },

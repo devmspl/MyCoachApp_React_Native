@@ -14,7 +14,7 @@ const AppInit = () => {
   const [ready, setReady] = React.useState(false);
   const [isFirstTimeOpen, setIsFirstTimeOpen] = React.useState(false);
   const dispatch = useDispatch();
-  
+
   // React.useEffect(() => {
   //   AsyncStorage.clear();
   // },[])

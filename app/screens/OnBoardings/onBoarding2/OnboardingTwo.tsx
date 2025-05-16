@@ -1,7 +1,14 @@
-import {ScrollView, StyleSheet, Text, View} from 'react-native';
+import {
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import React, {useCallback, useState} from 'react';
 import MainLayout from '../../../components/MainLayout';
 import AntDesign from 'react-native-vector-icons/AntDesign';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {COLORS, FONT_SIZE, FONT_WEIGHT} from '../../../styles';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {RootStackParams} from '../../../navigation/types';
@@ -58,13 +65,7 @@ const OnboardingTwo = () => {
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
   const [selectedId, setSelectedId] = React.useState<null | number>(1);
-
   const [numberOfKids, setNumberOfKids] = useState(1);
-
-  const onBack = () => {
-    navigation.navigate('OnboardingOne');
-  };
-  
 
   return (
     <MainLayout>
@@ -76,19 +77,25 @@ const OnboardingTwo = () => {
               flexDirection: 'row',
               alignItems: 'center',
               justifyContent: 'space-between',
-              marginHorizontal: 20,
             }}>
-            <AntDesign
-              onPress={onBack}
-              name="arrowleft"
-              size={24}
-              color="black"
-            />
+            <TouchableOpacity
+              onPress={() => navigation.goBack()}
+              style={{
+                height: 40,
+                width: 40,
+                backgroundColor: 'white',
+                borderRadius: 35,
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}>
+              <MaterialIcons name="arrow-back" size={25} color={COLORS.black} />
+            </TouchableOpacity>
             <View style={styles.slideView}>
               <View
                 style={[styles.btn, {backgroundColor: COLORS.primary}]}></View>
               <View
                 style={[styles.btn, {backgroundColor: COLORS.primary}]}></View>
+              <View style={styles.btn}></View>
               <View style={styles.btn}></View>
               <View style={styles.btn}></View>
             </View>

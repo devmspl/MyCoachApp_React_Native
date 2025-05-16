@@ -6,10 +6,12 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import BlueLogo from '../../../assets/svg/BlueArrow.svg';
 import * as Progress from 'react-native-progress';
 import Foundation from 'react-native-vector-icons/Foundation';
+import {SheetManager} from 'react-native-actions-sheet';
+import {SHEETS} from '../../sheets/sheets';
 
 const Goals = () => {
   return (
-    <View style={{marginHorizontal: 20,}}>
+    <View style={{marginHorizontal: 20}}>
       {/* Balance Box */}
       <View style={styles.balanceView}>
         <MyText size={FONT_SIZE.sm} color={'white'}>
@@ -21,7 +23,9 @@ const Goals = () => {
           size={FONT_SIZE['1.5xl']}>
           $2,145.98
         </MyText>
-        <TouchableOpacity style={styles.filterBtn}>
+        <TouchableOpacity
+          onPress={() => SheetManager.show(SHEETS.FilterSheet)}
+          style={styles.filterBtn}>
           <FontAwesome name="filter" size={15} />
           <MyText size={FONT_SIZE.sm}>Filter</MyText>
         </TouchableOpacity>

@@ -3210,11 +3210,13 @@ __metadata:
     eslint: ^8.19.0
     formik: ^2.4.6
     jest: ^29.6.3
+    moment: ^2.30.1
     prettier: 2.8.8
     react: 19.0.0
     react-native: ^0.79.0
     react-native-actions-sheet: ^0.9.7
     react-native-chart-kit: ^6.12.0
+    react-native-date-picker: ^5.0.12
     react-native-element-dropdown: ^2.12.4
     react-native-gesture-handler: ^2.25.0
     react-native-image-picker: ^8.2.0
@@ -7743,6 +7745,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"moment@npm:^2.30.1":
+  version: 2.30.1
+  resolution: "moment@npm:2.30.1"
+  checksum: 859236bab1e88c3e5802afcf797fc801acdbd0ee509d34ea3df6eea21eb6bcc2abd4ae4e4e64aa7c986aa6cba563c6e62806218e6412a765010712e5fa121ba6
+  languageName: node
+  linkType: hard
+
 "ms@npm:2.0.0":
   version: 2.0.0
   resolution: "ms@npm:2.0.0"
@@ -8565,6 +8574,16 @@ __metadata:
     react-native: ">= 0.50.0"
     react-native-svg: "> 6.4.1"
   checksum: 04c225965c0ce3c71205a62bc92743e9188458d8f95c12481e43a2e53c425bd5db8274e57ab93c1cb95ffd3fb54950ca92c3d33e518a3505d7697c247b3b7e15
+  languageName: node
+  linkType: hard
+
+"react-native-date-picker@npm:^5.0.12":
+  version: 5.0.12
+  resolution: "react-native-date-picker@npm:5.0.12"
+  peerDependencies:
+    react: ">= 17.0.1"
+    react-native: ">= 0.64.3"
+  checksum: 61741202fe1c97d784e1b0d0ef13d2f1c4c1859be3447b49feff9ccfa810567f0034d3e8b2981d613753c5fc4e6612e855f1037a8ece03f13cbb3ad96ed74ba7
   languageName: node
   linkType: hard
 
