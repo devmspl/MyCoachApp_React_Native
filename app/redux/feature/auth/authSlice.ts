@@ -17,9 +17,10 @@ export const authSlice = createSlice({
   initialState,
   reducers: {
     setAuth: (state, action: PayloadAction<any>) => {
-      const user = action.payload;
-      const token = user?.token;
-      state.token = token;
+      // console.log(action, 'action');
+      const user = action.payload.user;
+      state.user = action.payload.user;
+      state.token = action.payload.token;
       setLocalUser(user);
     },
     updateUser: (state, action: PayloadAction<any>) => {
@@ -38,7 +39,7 @@ export const authSlice = createSlice({
 
 // Action creators are generated for each case reducer function
 export const {setAuth, updateUser, logOut} = authSlice.actions;
-export const tokenSelector = (s: any) => s.auth.token;
-export const authSelector = (s: any) => s.auth.user;
+export const tokenSelector = (s: any) => s.auth?.token;
+export const authSelector = (s: any) => s.auth?.user;
 
 export default authSlice.reducer;

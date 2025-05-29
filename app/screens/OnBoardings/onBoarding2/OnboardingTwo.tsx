@@ -1,4 +1,5 @@
 import {
+  Alert,
   ScrollView,
   StyleSheet,
   Text,
@@ -12,18 +13,21 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {COLORS, FONT_SIZE, FONT_WEIGHT} from '../../../styles';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {RootStackParams} from '../../../navigation/types';
-import {useNavigation} from '@react-navigation/native';
+import {useNavigation, useRoute} from '@react-navigation/native';
 import {MyText} from '../../../components/MyText';
 import PrimaryBtn from '../../../components/PrimaryBtn';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import Slider from '@react-native-assets/slider';
+import {api_onbaordingTwo} from '../../../api/onboardings';
+import {useDispatch, useSelector} from 'react-redux';
+import {tokenSelector, updateUser} from '../../../redux/feature/auth/authSlice';
 
 const options = [
-  {id: 1, name: 'Married'},
-  {id: 2, name: 'Single'},
-  {id: 3, name: 'Dating/Engaged'},
-  {id: 4, name: 'Married-no kids'},
-  {id: 5, name: 'Married-yoiung kids'},
+  {id: 1, name: 'Married', value: 'married'},
+  {id: 2, name: 'Single', value: 'single'},
+  {id: 3, name: 'Dating/Engaged', value: 'dating'},
+  {id: 4, name: 'Married-no kids', value: 'married-no-kids'},
+  {id: 5, name: 'Married-yoiung kids', value: 'married-yoiung-kids'},
 ];
 const Item = ({
   name,
@@ -61,11 +65,51 @@ const Item = ({
   );
 };
 
+// type RootStackParams = {
+//   OnboardingTwo: {token: any};
+//   OnboardingThree: {token: any};
+// };
+
 const OnboardingTwo = () => {
+  type RootStackParams = {
+    OnboardingThree: {token: any};
+  };
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
-  const [selectedId, setSelectedId] = React.useState<null | number>(1);
+  const [selectedId, setSelectedId] = React.useState<null | string>(1);
   const [numberOfKids, setNumberOfKids] = useState(1);
+  const [isLoading, setisLoading] = useState(false);
+  const [selectedStatusName, setSelectedStatusName] = useState<string | null>(
+    options[0].name,
+  );
+  const dispatch = useDispatch();
+  // const token  = useSelector(tokenSelector);
+  // console.log('token from selector ', token);
+
+  const token = useRoute<any>().params.token;
+  //  console.log('token from route params ', token);
+
+  const handleRelationShipStatus = async () => {
+    setisLoading(true);
+    const payload = {
+      status: selectedId,
+      number_of_kids: numberOfKids,
+    };
+    console.log('payload', payload);
+    console.log('Payload JSON:', JSON.stringify(payload));
+
+    try {
+      const res = await api_onbaordingTwo(payload, token);
+      dispatch(updateUser(res?.data));
+      Alert.alert(
+        'Success',
+        res.message || 'RELATIONSHIP STATUS UPDATED SUCCESSFULLY',
+      );
+      navigation.navigate('OnboardingThree', {token: token});
+    } catch (error: any) {
+      console.error('Error handling relationship status:', error);
+    }
+  };
 
   return (
     <MainLayout>
@@ -119,9 +163,12 @@ const OnboardingTwo = () => {
             {options.map(i => (
               <Item
                 key={i.id}
-                onSelect={() => setSelectedId(i.id)}
-                name={i.name}
-                isSelected={i.id === selectedId}
+                onSelect={() => {
+                  setSelectedId(i.value);
+                  setSelectedStatusName(i.name);
+                }}
+                name={i.name || ''}
+                isSelected={i.value === selectedId}
               />
             ))}
           </View>
@@ -143,7 +190,7 @@ const OnboardingTwo = () => {
             <MyText>{numberOfKids} kids</MyText>
           </View>
           <PrimaryBtn
-            onPress={() => navigation.navigate('OnboardingThree')}
+            onPress={handleRelationShipStatus}
             containerStyle={{marginVertical: 20, marginTop: 100}}
             text="Confirm"
           />

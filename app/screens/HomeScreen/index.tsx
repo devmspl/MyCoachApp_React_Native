@@ -5,9 +5,9 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React from 'react';
+import React, {useState} from 'react';
 import MainLayout from '../../components/MainLayout';
-import {useNavigation} from '@react-navigation/native';
+import {useNavigation, useRoute} from '@react-navigation/native';
 import {HomeStackParams} from '../../navigation/types';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {useSelector} from 'react-redux';
@@ -23,12 +23,39 @@ import {SheetManager} from 'react-native-actions-sheet';
 import {SHEETS} from '../../sheets/sheets';
 import CardsIcon from '../../../assets/svg/CardsIcon.svg';
 import {getRandomColor} from '../../utils/helper';
+import {api_getUserProfile} from '../../api/profile';
+import {tokenSelector} from '../../redux/feature/auth/authSlice';
+import {store} from '../../redux';
+// import {Home} from '../../navigation/types';
 
 const HomeScreen = () => {
   const navigation =
     useNavigation<NativeStackNavigationProp<HomeStackParams>>();
-  const {user, accessToken} = useSelector((s: any) => s.auth);
   const [isBalanceVisible, setIsBalanceVisible] = React.useState(false);
+  const [isLoading, setIsLoading] = React.useState(false);
+  // const user = store.getState().auth.user;
+
+  const [userData, setUserData] = useState<any>({});
+  const fullName = userData?.personal?.firstName
+    ? `${userData.personal.firstName} ${
+        userData.personal.lastName ?? ''
+      }`.trim()
+    : null;
+
+  const handleUserData = async () => {
+    setIsLoading(true);
+    try {
+      const res = await api_getUserProfile();
+      setUserData(res?.profile);
+      console.log(JSON.stringify(res), res, 'api_getUserProfile');
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  React.useEffect(() => {
+    handleUserData();
+  }, []);
 
   return (
     <MainLayout>
@@ -44,7 +71,7 @@ const HomeScreen = () => {
                 <View>
                   <MyText size={FONT_SIZE.sm}>Good afternoon</MyText>
                   <MyText size={FONT_SIZE.sm} bold={FONT_WEIGHT.bold}>
-                    JAH Creative
+                    {fullName || 'JAH Creative'}
                   </MyText>
                 </View>
                 <View style={styles.imgView}></View>
@@ -152,11 +179,7 @@ const HomeScreen = () => {
               <SavingGoalCard />
               <Recommendation />
 
-
-
               {/* {END} */}
-
-              
             </>
           );
         }}

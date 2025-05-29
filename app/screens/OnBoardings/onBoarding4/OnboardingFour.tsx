@@ -1,16 +1,29 @@
-import {SafeAreaView, ScrollView, StyleSheet, Text, View} from 'react-native';
+import {
+  Alert,
+  SafeAreaView,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
 import React from 'react';
 import MainLayout from '../../../components/MainLayout';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import {COLORS, FONT_SIZE, FONT_WEIGHT} from '../../../styles';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {RootStackParams} from '../../../navigation/types';
-import {useNavigation} from '@react-navigation/native';
+import {useNavigation, useRoute} from '@react-navigation/native';
 import {MyText} from '../../../components/MyText';
 import PrimaryBtn from '../../../components/PrimaryBtn';
 import SelectInput from '../../../components/SelectInput';
+import {api_onbaordingFour} from '../../../api/onboardings';
 
 const OnboardingFour = () => {
+  type RootStackParams = {
+    OnboardingFive: {
+      token: any;
+    };
+  };
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
 
@@ -22,6 +35,55 @@ const OnboardingFour = () => {
     optionFive: '',
     optionSix: '',
   });
+  
+  const [isLoading, setIsLoading] = React.useState(false);
+  const token = useRoute<any>().params.token;
+  //  console.log('token from route params ', token);
+
+  const handleAnswers = async () => {
+    setIsLoading(true);
+    const payload = {
+      answers: [
+        {
+          questionId: 1,
+          answer: selectedOptions.optionOne,
+        },
+        {
+          questionId: 2,
+          answer: selectedOptions.optionTwo,
+        },
+        {
+          questionId: 3,
+          answer: selectedOptions.optionThree,
+        },
+        {
+          questionId: 4,
+          answer: selectedOptions.optionFour,
+        },
+        {
+          questionId: 5,
+          answer: selectedOptions.optionFive,
+        },
+      ],
+      financial_philosophy: selectedOptions.optionSix,
+    };
+    console.log('payload', payload);
+    console.log('Payload JSON:', JSON.stringify(payload));
+
+    try {
+      const res = await api_onbaordingFour(payload, token);
+      // console.log({res});
+      Alert.alert(
+        'Success',
+        res.message || 'QUIZ STATUS UPDATED SUCCESSFULLY',
+      );
+      navigation.navigate('OnboardingFive', {token: token});
+    } catch (error: any) {
+      console.log(error);
+      Alert.alert('Alert', error.message);
+    }
+  };
+
   return (
     <MainLayout>
       <ScrollView contentContainerStyle={{paddingHorizontal: 20}}>
@@ -231,8 +293,8 @@ const OnboardingFour = () => {
         </View>
 
         <PrimaryBtn
-          onPress={() => navigation.navigate('OnboardingFive')}
-          containerStyle={{marginVertical: 20, marginBottom:200}}
+          onPress={handleAnswers}
+          containerStyle={{marginVertical: 20, marginBottom: 200}}
           text="Next"
         />
       </ScrollView>

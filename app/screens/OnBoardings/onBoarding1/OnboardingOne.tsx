@@ -25,14 +25,29 @@ import Notch from '../../../components/Slider/Notch';
 import {useDispatch} from 'react-redux';
 import {updateUser} from '../../../redux/feature/auth/authSlice';
 import {api_onbaordingOne} from '../../../api/onboardings';
-                                                       
+import SelectInput from '../../../components/SelectInput';
+
 const OnboardingOne = () => {
+
+  type RootStackParams = {
+  // ... other routes
+  OnboardingTwo: { token: any }; // or 'any' if type is not known
+  // ... other routes
+};
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
   const [low, setLow] = useState(400);
   const [high, setHigh] = useState(1500);
   const [min, setMin] = useState(10);
   const [max, setMax] = useState(2000);
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [jobTitle, setJobTitle] = useState('');
+  const [age, setAge] = useState('');
+  const [educationLevel, setEducationLevel] = useState('');
+  const [selectedEducation, setSelectedEducation] = useState('');
+  const token = useRoute<any>().params.token;
+  console.log(token, 'token from route');
 
   const renderThumb = useCallback(() => <Thumb />, []);
   const renderRail = useCallback(() => <Rail />, []);
@@ -44,38 +59,71 @@ const OnboardingOne = () => {
     setHigh(high);
   }, []);
 
+  // console.log(low, high, min, max, 'slider values');
+
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const params = useRoute<any>().params;
+
+
+  const educationOptions = [
+    {label: 'No Formal Education', value: 'No Formal Education'},
+    {label: 'Primary School', value: 'Primary School'},
+    {label: 'Middle School', value: 'Middle School'},
+    {
+      label: 'High School / Secondary School',
+      value: 'High School / Secondary School',
+    },
+    {
+      label: 'Diploma / Vocational Training',
+      value: 'Diploma / Vocational Training',
+    },
+    {
+      label: 'Higher Secondary / Pre-University (10+2)',
+      value: 'Higher Secondary / Pre-University (10+2)',
+    },
+    {label: 'Bachelor’s Degree', value: 'Bachelor’s Degree'},
+    {label: 'Master’s Degree', value: 'Master’s Degree'},
+    {label: 'Doctorate / Ph.D.', value: 'Doctorate / Ph.D.'},
+    {label: 'Other', value: 'Other'},
+  ];
+
   // const token = params.token;
-  console.log(params, 'params');
+  // console.log(params, 'params');
 
-  // const handlePersonalDetails = async () => {
-  //   setLoading(true);
-  //   const payload = {
-  //     first_name: 'John',
-  //     last_name: 'Doe',
-  //     job_title: 'Software Engineer',
-  //     age: 25,
-  //     education_level: 'Graduate',
-  //   };
+  // console.log(firstName, lastName, jobTitle, age, educationLevel, 'state values');
 
-  //   try {
-  //     const res = await api_onbaordingOne(payload, token);
-  //     console.log(res, 'api_onbaordingOne res');
-  //     Alert.alert(
-  //       'Success',
-  //       res.message || 'PERSONAL DETAILS UPDATED SUCCESSFULLY',
-  //     );
-  //     dispatch(updateUser(res.data));
-  //     navigation.navigate('OnboardingTwo');
-  //   } catch (error: any) {
-  //     Alert.alert('Alert', error.message);
-  //     console.log(error, 'error during login');
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
+  const handlePersonalDetails = async () => {
+    setLoading(true);
+    const payload = {
+      first_name: firstName,
+      last_name: lastName,
+      job_title: jobTitle,
+      age: 25,
+      salary_range: {
+        min: min,
+        max: max,  
+      },
+      education_level: educationLevel || selectedEducation,
+    };
+
+    try {
+      const res = await api_onbaordingOne(payload, token);
+      console.log(res, 'api_onbaordingOne res');
+      Alert.alert(
+        'Success',
+        res.message || 'PERSONAL DETAILS UPDATED SUCCESSFULLY',
+      );
+      dispatch(updateUser(res.data));
+      navigation.navigate('OnboardingTwo',{token: token});
+      // navigation.navigate('OnboardingTwo', {token: token});
+    } catch (error: any) {
+      Alert.alert('Alert', error.message);
+      console.log(error, 'error during login');
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <MainLayout>
@@ -125,10 +173,22 @@ const OnboardingOne = () => {
               that will get us started.
             </MyText>
 
-            <Input placeholder="First Name" />
-            <Input placeholder="Last Name" />
-            <Input placeholder="Your Job Title" />
-            <Input placeholder="Your Age" />
+            <Input
+              value={firstName}
+              onChangeText={setFirstName}
+              placeholder="First Name"
+            />
+            <Input
+              value={lastName}
+              onChangeText={setLastName}
+              placeholder="Last Name"
+            />
+            <Input
+              value={jobTitle}
+              onChangeText={setJobTitle}
+              placeholder="Your Job Title"
+            />
+            <Input value={age} onChangeText={setAge} placeholder="Your Age" />
 
             <MyText bold={FONT_WEIGHT.bold} style={{marginTop: 15}}>
               Salary Range
@@ -164,11 +224,24 @@ const OnboardingOne = () => {
                 <MyText bold={FONT_WEIGHT.semibold}>${max}</MyText>
               </View>
             </View>
-            <Input placeholder="Your Education Level" />
+
+
+            {/* <Input placeholder="Your Education Level" /> */}
+
+            <SelectInput
+              label="Select your education level"
+              data={educationOptions}
+              value={selectedEducation}
+              onSelect={item => {
+                setSelectedEducation(item.value);
+                setEducationLevel(item.value); // sync input with dropdown
+              }}
+              placeholder="Pick your education level"
+            />
           </View>
           <PrimaryBtn
-            // onPress={handlePersonalDetails}
-            onPress={() => navigation.navigate('OnboardingTwo')}
+            onPress={handlePersonalDetails}
+            // onPress={() => navigation.navigate('OnboardingTwo')}
             containerStyle={{marginTop: 120}}
             text="Next"
           />

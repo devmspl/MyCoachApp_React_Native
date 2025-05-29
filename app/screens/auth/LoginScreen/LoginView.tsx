@@ -34,6 +34,9 @@ const LoginSchema = yup.object().shape({
 });
 
 const LoginView = () => {
+  // type RootStackParams = {
+  //   MainTab: {token: any};
+  // };
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
   const dispatch = useDispatch();
@@ -43,10 +46,12 @@ const LoginView = () => {
     setLoading(true);
     try {
       const res = await api_login(payload);
-      console.log(res, 'login api res');
-      Alert.alert('Success', res.message || 'LOGIN SUCCESSFULLY');
-      dispatch(setAuth(res));
-      navigation.navigate('MainTab');
+      if (res?.success) {
+        // console.log(res, 'login api res');
+        dispatch(setAuth(res));
+        Alert.alert('Success', res.message || 'LOGIN SUCCESSFULLY');
+        navigation.navigate('MainTab');
+      }
     } catch (error: any) {
       Alert.alert('Alert', error.message);
       console.log(error, 'error during login');

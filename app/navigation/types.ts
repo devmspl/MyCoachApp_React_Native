@@ -68,7 +68,15 @@ export type ProfileStackStackParams = {
 };
 
 export type HomeStackParams = {
-  Home: undefined;
+  Home: {
+    UserData?: {
+      personal?: {
+        firstName?: string;
+        lastName?: string;
+      };
+      // add other fields as needed
+    };
+  };
   StoryScreen: undefined;
   Activity: undefined;
   Message: undefined;
