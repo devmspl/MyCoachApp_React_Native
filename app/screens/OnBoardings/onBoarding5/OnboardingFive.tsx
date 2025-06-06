@@ -50,6 +50,10 @@ const OnboardingFive = () => {
     try {
       const res = await api_onbaordingFive(payload, token);
       // console.log({res});
+      Alert.alert(
+        'Success',
+        res.message || 'BANK DETAILS UPDATED SUCCESSFULLY',
+      );
       navigation.navigate('Login', {token: token});
     } catch (error: any) {
       console.log(error);

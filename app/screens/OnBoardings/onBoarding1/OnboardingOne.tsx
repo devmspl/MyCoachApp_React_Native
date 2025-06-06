@@ -28,12 +28,11 @@ import {api_onbaordingOne} from '../../../api/onboardings';
 import SelectInput from '../../../components/SelectInput';
 
 const OnboardingOne = () => {
-
   type RootStackParams = {
-  // ... other routes
-  OnboardingTwo: { token: any }; // or 'any' if type is not known
-  // ... other routes
-};
+    // ... other routes
+    OnboardingTwo: {token: any}; // or 'any' if type is not known
+    // ... other routes
+  };
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
   const [low, setLow] = useState(400);
@@ -64,7 +63,6 @@ const OnboardingOne = () => {
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const params = useRoute<any>().params;
-
 
   const educationOptions = [
     {label: 'No Formal Education', value: 'No Formal Education'},
@@ -99,14 +97,14 @@ const OnboardingOne = () => {
       first_name: firstName,
       last_name: lastName,
       job_title: jobTitle,
-      age: 25,
+      age: age,
       salary_range: {
         min: min,
-        max: max,  
+        max: max,
       },
       education_level: educationLevel || selectedEducation,
     };
-
+    console.log(payload, JSON.stringify(payload), 'payload');
     try {
       const res = await api_onbaordingOne(payload, token);
       console.log(res, 'api_onbaordingOne res');
@@ -115,11 +113,11 @@ const OnboardingOne = () => {
         res.message || 'PERSONAL DETAILS UPDATED SUCCESSFULLY',
       );
       dispatch(updateUser(res.data));
-      navigation.navigate('OnboardingTwo',{token: token});
+      navigation.navigate('OnboardingTwo', {token: token});
       // navigation.navigate('OnboardingTwo', {token: token});
-    } catch (error: any) {
-      Alert.alert('Alert', error.message);
-      console.log(error, 'error during login');
+    } catch (res: any) {
+      Alert.alert('Alert', res.message);
+      console.log(res, 'error during login');
     } finally {
       setLoading(false);
     }
@@ -224,7 +222,6 @@ const OnboardingOne = () => {
                 <MyText bold={FONT_WEIGHT.semibold}>${max}</MyText>
               </View>
             </View>
-
 
             {/* <Input placeholder="Your Education Level" /> */}
 

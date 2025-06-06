@@ -18,7 +18,8 @@ export const api_login = async (payload: any) => {
 
 // SIGN UP ->POST
 export const api_signup = async (email: any, password: any) => {
-  const uri = `${BASE_URL}/auth/register/`;
+  // const uri = `${BASE_URL}/auth/register/`;
+  const uri = "https://coachapp-backend.cradle.services/api/auth/register/";
   const response = await fetch(uri, {
     method: 'POST',
     headers: {

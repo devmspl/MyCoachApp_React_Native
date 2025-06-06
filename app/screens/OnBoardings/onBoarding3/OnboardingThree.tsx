@@ -38,7 +38,7 @@ const OnboardingThree = () => {
     setisLoading(true);
     const payload = {
       has_debt: selectedOptions.haveDebts,
-      insurance_types: [selectedOptions.haveInsurance],
+      insurance_types: selectedOptions.haveInsurance,
       budgeting_experience: selectedOptions.budgetedBefore,
       preferred_method: selectedOptions.preferBudgetMethod,
     };

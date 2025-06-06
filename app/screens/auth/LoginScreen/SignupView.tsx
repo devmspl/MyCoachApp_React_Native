@@ -47,13 +47,17 @@ const SignupView = () => {
   const handleSignUp = async (payload: any) => {
     setLoading(true);
     const {email, password} = payload;
+    // const email = "sukhi@gmail.com";
+    // const password = "12345678";
+    console.log(email, password, 'payload from signup');
     try {
       const res = await api_signup(email, password);
       Alert.alert('Success', res.message || 'Account created!');
       //@ts-ignore
       navigation.navigate('OnboardingOne', {token: res.token});
     } catch (error: any) {
-      console.log(error);
+      console.log(error, 'error from signup');
+      
       Alert.alert('Error', error.message);
     } finally {
       setLoading(false);
