@@ -33,23 +33,25 @@ const Input2 = ({
 }: InputProps) => {
   return (
     <View style={[{width: '100%'}, inputWrapperStyle, {marginTop: 20}]}>
-      <Text>{label}</Text>
+      <Text  style={{marginBottom:10, fontWeight:'bold'}}>{label}</Text>
       <TextInput
         value={value}
         onChangeText={onChangeText}
         placeholder={placeholder}
-        placeholderTextColor={'white'}
+        placeholderTextColor={'gray'}
         secureTextEntry={secureTextEntry}
         keyboardType={keyboardType}
         onBlur={onBlur}
         style={[
           {
-            borderBottomColor: COLORS.grey,
-            borderBottomWidth: 2,
+            backgroundColor: 'white',
+            borderWidth: 1,
             height: 45,
-            color: 'white',
-            fontSize: 15,
-            
+            borderRadius: 10,
+            color: 'black',
+            paddingLeft: 12,
+            fontSize: 14,
+            borderColor: COLORS.grey,
           },
           inputStyle,
         ]}

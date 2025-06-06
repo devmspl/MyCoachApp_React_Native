@@ -1,5 +1,5 @@
 
 
 
-export const BASE_URL: string = 'https://espoir.one:1020/api';
+export const BASE_URL: string = 'https://coachapp-backend.cradle.services/api';
 
