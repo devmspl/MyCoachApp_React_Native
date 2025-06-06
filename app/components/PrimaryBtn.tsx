@@ -41,7 +41,7 @@ const PrimaryBtn = ({
       {loading ? (
         <ActivityIndicator size={'small'} color={'#FFF'} />
       ) : (
-        <RegularText style={[{color: '#fff'}, textStyle]} bold>
+        <RegularText style={[{color: '#fff', fontSize:17}, textStyle]} bold>
           {text}
         </RegularText>
       )}

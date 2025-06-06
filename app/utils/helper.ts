@@ -50,11 +50,11 @@ function getRandomColor() {
 
 export {setLocalUser, getLocalUser, destroyLocalStorage, getRandomColor};
 
-export const onSharePost = async () => {
+export const onShare = async () => {
   try {
     const result = await Share.share({
-      title: 'Meander Live',
-      message: 'https://espoir.one:1020/specs',
+      title: 'My Coach App',
+      message: 'This is  Finance App.',
     });
     console.log('onShare', result);
   } catch (error: any) {

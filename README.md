@@ -102,6 +102,7 @@ To learn more about React Native, take a look at the following resources:
 
 
 
+
 // REACT NATIVE ENVIORNMENT SETUP STEP BY STEP
 
 1. Install Homebrew (Package Manager)
@@ -139,8 +140,7 @@ brew install watchman
 4. Install Xcode Command Line Tools
 React Native requires some tools that come with Xcode, which includes compilers and other development tools.
 * Install the command line tools by running:
-bash
-Copy
+
 xcode-select --install
 
 * Once installed, make sure everything is set up properly by running:
@@ -226,3 +226,74 @@ npx react-native run-android
 
 This should help you set up your local development environment on their Mac for React Native development.
 
+
+
+
+This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+
+# Getting Started
+
+> **Note**: Make sure you have completed the [Set Up Your Environment](https://reactnative.dev/docs/set-up-your-environment) guide before proceeding.
+
+<!-- REACT NATIVE ENVIRONMENT SETUP STEP BY STEP -->
+
+1. Install Homebrew (Package Manager)  
+Homebrew is a popular package manager for macOS, which will help in installing other dependencies.
+* Open the Terminal app on your Mac.
+* Install Homebrew by pasting the following command and hitting Enter:  
+`/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"`
+* After installation, make sure Homebrew is correctly installed by typing:  
+`brew --version`  
+* If you see the version number, you're good to go. 
+
+2. Install Node.js and npm  
+React Native relies on Node.js, so you need to install it along with npm (Node Package Manager).
+* Run the following command to install Node.js using Homebrew:  
+`brew install node`
+* Once the installation is complete, verify by checking the installed versions:  
+`node --version`  
+`npm --version`
+
+3. Install Watchman  
+Watchman is a tool developed by Facebook to watch changes in the filesystem. It's required for React Native development.
+* Install Watchman with Homebrew:  
+`brew install watchman`
+
+4. Install Xcode Command Line Tools  
+React Native requires some tools that come with Xcode, which includes compilers and other development tools.
+* Install the command line tools by running:  
+`xcode-select --install`
+* Once installed, make sure everything is set up properly by running:  
+`xcode-select -p`
+
+5. Install Xcode  
+Xcode is needed for building iOS apps.
+* Go to the Mac App Store and search for Xcode.
+* Download and install Xcode (it may take a while depending on your internet connection).
+* Once installed, open Xcode and accept the license agreement.
+* Open Xcode and go to Preferences → Locations, and ensure the Command Line Tools are set to the latest version of Xcode.
+
+6. Install CocoaPods  
+CocoaPods is a dependency manager for iOS projects. React Native uses it for managing iOS project dependencies.
+* Install CocoaPods using the following command:  
+`sudo gem install cocoapods`
+* After installation, verify it by checking the version:  
+`pod --version`
+
+7. Install React Native CLI  
+React Native provides two options for development: Expo and the React Native CLI. Here, we’ll set up the React Native CLI.
+* Install React Native CLI globally using npm:  
+`npm install -g react-native-cli`
+
+8. Set Up Android Development Environment (Optional)  
+If you need to develop for Android as well, you’ll need to install Android Studio and set up the Android development environment.
+* Download Android Studio from the official website.
+* During installation, make sure to select the Android SDK and Android Virtual Device options.
+* Once installed, open Android Studio and configure the SDK by going to Preferences → Appearance & Behavior → System Settings → Android SDK.
+
+After setting up Android Studio, you’ll need to add the Android SDK path to your `/.bash_profile` (or `/.zshrc` if you're using Zsh).
+* Add the following lines at the end of the file:
+```sh
+export ANDROID_HOME=$HOME/Library/Android/sdk
+export PATH=$PATH:$ANDROID_HOME/tools
+export PATH=$PATH:$ANDROID_HOME/platform-tools

@@ -1,9 +1,6 @@
 import {
   View,
-  Text,
-  Touchable,
   TouchableOpacity,
-  Dimensions,
 } from 'react-native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -14,7 +11,7 @@ import {COLORS} from '../styles';
 import {RegularText} from './MyText';
 import {useNavigation} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import {RootStackParams} from '../navigation/types';
+import {RootStackParams} from '../navigation/types'; 
 type Props = {
   onClose: () => void;
 };
