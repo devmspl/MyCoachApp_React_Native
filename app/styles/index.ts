@@ -8,19 +8,27 @@ const globalStyles = {
 };
 
 const COLORS = {
-  primary: '#2D2D2D',
+  primary: '#00C059',
   white: '#fff',
   black: '#222',
-  grey: '#D4D4D8',
+  grey: '#E3E3E3',
   lightgrey: '#F4F4F5',
   darkgrey: '#A1A1AA',
   blue: '#3141ad',
   lightBlue: '#0096ED',
-  bg:'#FAFAFA',
-  cream:'#F5F2E4'
+  lightBg: '#EBFFF4',
+  bg:'#F0F0F0',
+  cream:'#F5F2E4',
+  yellow:'#EFBF04',
+  lightyellow:'#FFBE0033',
+  brown:'#643300',
+  lavender:'#A577FF',
+  metalgray:'#3C4142',
+
+  green: '#29715B',
+  greenTeal: '#00C059',
 }
 export { globalStyles, COLORS };
-
 
 import {
   widthPercentageToDP as wp,
@@ -61,6 +69,7 @@ export const FONT_SIZE = {
   xl: wp(5),
   '1.5xl': wp(5.8),
   '2xl': wp(6.8),
+  '2.5xl': wp(7.5),
   '3xl': wp(9),
   '4xl': wp(11),
   '5xl': wp(12.5),

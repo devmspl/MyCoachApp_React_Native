@@ -1,0 +1,117 @@
+Start: 1, Capture: 2, Land: 3
+Start: 1, Capture: 4, Land: 7
+Start: 1, Capture: 22, Land: 19
+
+Start: 2, Capture: 3, Land: 25
+Start: 2, Capture: 5, Land: 8
+Start: 2, Capture: 23, Land: 20
+
+Start: 3, Capture: 25, Land: 15
+Start: 3, Capture: 6, Land: 9
+Start: 3, Capture: 24, Land: 21
+Start: 3, Capture: 2, Land: 1
+
+Start: 4, Capture: 1, Land: 22
+Start: 4, Capture: 7, Land: 10
+Start: 4, Capture: 5, Land: 6
+
+Start: 5, Capture: 2, Land: 23
+Start: 5, Capture: 8, Land: 11
+Start: 5, Capture: 6, Land: 25
+
+Start: 6, Capture: 5, Land: 4
+Start: 6, Capture: 25, Land:18
+Start: 6, Capture: 9, Land:12
+Start: 6, Capture: 3, Land:24
+
+
+Start: 7, Capture: 8, Land: 9
+Start: 7, Capture: 4, Land: 1   
+Start: 7, Capture: 10, Land: 13   
+
+
+Start: 8, Capture: 5, Land: 2 
+Start: 8, Capture: 11, Land: 14 
+Start: 8, Capture: 9, Land: 25 
+   
+
+Start: 9, Capture: 8, Land: 7 
+Start: 9, Capture: 6, Land: 3 
+Start: 9, Capture: 12, Land: 15   
+Start: 9, Capture: 25, Land: 21
+
+
+Start: 10, Capture: 7, Land: 4
+Start: 10, Capture: 11, Land: 12 
+Start: 10, Capture: 13, Land: 16
+
+Start: 11, Capture: 8, Land: 5
+Start: 11, Capture: 12, Land: 25
+Start: 11, Capture: 14, Land: 17
+
+
+Start: 12, Capture: 9, Land: 6
+Start: 12, Capture: 15, Land: 18
+Start: 12, Capture: 25, Land: 24
+Start: 12, Capture: 11, Land: 10
+
+Start: 13, Capture: 14 Land: 15
+Start: 13, Capture: 10 Land: 7
+Start: 13, Capture: 16 Land: 19
+
+Start: 14, Capture: 15 Land: 25
+Start: 14, Capture: 17 Land: 20
+Start: 14, Capture: 11 Land: 8
+
+Start: 15, Capture: 25 Land: 3
+Start: 15, Capture: 18 Land: 21
+Start: 15, Capture: 12 Land: 9
+Start: 15, Capture: 14 Land: 13
+
+Start: 16, Capture: 17 Land: 18
+Start: 16, Capture: 19 Land: 22
+Start: 16, Capture: 13 Land: 10
+
+Start: 17, Capture: 18 Land: 25 
+Start: 17, Capture: 14 Land: 11 
+Start: 17, Capture: 20 Land: 23 
+
+Start: 18, Capture: 25 Land: 6 
+Start: 18, Capture: 21 Land: 24 
+Start: 18, Capture: 15 Land: 12
+Start: 18, Capture: 17 Land: 16
+
+Start: 19, Capture: 20 Land: 21 
+Start: 19, Capture: 22 Land: 1 
+Start: 19, Capture: 16 Land: 13 
+
+Start: 20, Capture: 21 Land: 25 
+Start: 20, Capture: 23 Land: 2 
+Start: 20, Capture: 17 Land: 14
+
+Start: 21, Capture: 25 Land: 9 
+Start: 21, Capture: 24 Land: 3 
+Start: 21, Capture: 18 Land: 15
+Start: 21, Capture: 20 Land: 19
+
+Start: 22, Capture: 23 Land: 24
+Start: 22, Capture: 1 Land: 4
+Start: 22, Capture: 19 Land: 16
+
+Start: 23, Capture: 24 Land: 25
+Start: 23, Capture: 2 Land: 5
+Start: 23, Capture: 20 Land: 17
+
+Start: 24, Capture: 25 Land: 12
+Start: 24, Capture: 3 Land: 6
+Start: 24, Capture: 21 Land: 18
+Start: 24, Capture: 23 Land: 22
+
+Start: 25, Capture: 3 Land: 2
+Start: 25, Capture: 6 Land: 5
+Start: 25, Capture: 9 Land: 8
+Start: 25, Capture: 12 Land: 11
+Start: 25, Capture: 15 Land: 14
+Start: 25, Capture: 18 Land: 17
+Start: 25, Capture: 21 Land: 20
+Start: 25, Capture: 24 Land: 23

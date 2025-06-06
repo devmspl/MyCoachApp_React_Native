@@ -1,6 +1,12 @@
 export type RootStackParams = {
   Splash: undefined;
   OnBoarding: undefined;
+  OnboardingOne: undefined;
+  OnboardingTwo: undefined;
+  OnboardingThree: undefined;
+  OnboardingFour: undefined;
+  OnboardingFive: undefined;
+  BankSelection: undefined;
   Welcome: undefined;
   Signup: undefined;
   PrivacyPolicy: undefined;
@@ -62,7 +68,15 @@ export type ProfileStackStackParams = {
 };
 
 export type HomeStackParams = {
-  Home: undefined;
+  Home: {
+    UserData?: {
+      personal?: {
+        firstName?: string;
+        lastName?: string;
+      };
+      // add other fields as needed
+    };
+  };
   StoryScreen: undefined;
   Activity: undefined;
   Message: undefined;
