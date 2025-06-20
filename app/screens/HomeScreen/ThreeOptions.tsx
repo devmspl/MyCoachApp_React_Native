@@ -1,46 +1,48 @@
 import {FlatList, Pressable, StyleSheet, Text, View} from 'react-native';
-import React from 'react';
+import React, {useState} from 'react';
 import {MyText} from '../../components/MyText';
 import {COLORS, FONT_SIZE, FONT_WEIGHT} from '../../styles';
-import * as Progress from 'react-native-progress';
+// import * as Progress from 'react-native-progress';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import CustomProgressBar from '../../components/CustomProgressbar';
+
+const remainingData = [
+  {title: 'Food', money: '190', progress: 0.4},
+  {title: 'Clothes', money: '300', progress: 0.7},
+  {title: 'Electricity', money: '235', progress: 0.6},
+  {title: 'Bills', money: '285', progress: 0.65},
+  {title: 'Vacation', money: '110', progress: 0.3},
+  {title: 'Phones', money: '250', progress: 0.55},
+];
+
+const spentData = [
+  {title: 'Food', money: '210', progress: 0.6},
+  {title: 'Clothes', money: '100', progress: 0.2},
+  {title: 'Electricity', money: '165', progress: 0.4},
+  {title: 'Bills', money: '115', progress: 0.35},
+  {title: 'Vacation', money: '290', progress: 0.7},
+  {title: 'Phones', money: '150', progress: 0.35},
+];
+
+const projectedData = [
+  {title: 'Food', money: '250', progress: 0.8},
+  {title: 'Clothes', money: '200', progress: 0.5},
+  {title: 'Electricity', money: '200', progress: 0.5},
+  {title: 'Bills', money: '300', progress: 0.75},
+  {title: 'Vacation', money: '350', progress: 0.9},
+  {title: 'Phones', money: '300', progress: 0.75},
+];
+
 
 const ThreeOptions = () => {
-  const [view, setView] = React.useState(1);
-  const data = [
-    {
-      title: 'Food',
-      money: '190',
-      progress: 0.4,
-    },
-    {
-      title: 'Clothes',
-      money: '300',
-      progress: 0.7,
-    },
-    {
-      title: 'Electricity',
-      money: '235',
-      progress: 0.6,
-    },
-    {
-      title: 'Bills',
-      money: '285',
-      progress: 0.65,
-    },
-    {
-      title: 'Vacation',
-      money: '110',
-      progress: 0.3,
-    },
-    {
-      title: 'Phones',
-      money: '250',
-      progress: 0.55,
-    },
-  ];
+  const [view, setView] = useState(1);
+
+  let data = remainingData;
+  if (view === 2) data = spentData;
+  if (view === 3) data = projectedData;
+
   return (
-    <View style={{marginHorizontal:20}}>
+    <View style={{marginHorizontal: 20}}>
       <View style={styles.viewBtn}>
         <Pressable
           onPress={() => setView(1)}
@@ -50,7 +52,8 @@ const ThreeOptions = () => {
           ]}>
           <MyText
             size={FONT_SIZE.sm}
-            bold={view === 1 ? FONT_WEIGHT.semibold : FONT_WEIGHT.normal}>
+            bold={view === 1 ? FONT_WEIGHT.semibold : FONT_WEIGHT.normal}
+            color={view === 1 ? COLORS.primary : COLORS.black}>
             Remaining
           </MyText>
         </Pressable>
@@ -63,7 +66,8 @@ const ThreeOptions = () => {
           ]}>
           <MyText
             size={FONT_SIZE.sm}
-            bold={view === 2 ? FONT_WEIGHT.semibold : FONT_WEIGHT.normal}>
+            bold={view === 2 ? FONT_WEIGHT.semibold : FONT_WEIGHT.normal}
+            color={view === 2 ? COLORS.primary : COLORS.black}>
             Spent
           </MyText>
         </Pressable>
@@ -75,7 +79,8 @@ const ThreeOptions = () => {
           ]}>
           <MyText
             size={FONT_SIZE.sm}
-            bold={view === 3 ? FONT_WEIGHT.semibold : FONT_WEIGHT.normal}>
+            bold={view === 3 ? FONT_WEIGHT.semibold : FONT_WEIGHT.normal}
+            color={view === 3 ? COLORS.primary : COLORS.black}>
             Projected
           </MyText>
         </Pressable>
@@ -97,20 +102,30 @@ const ThreeOptions = () => {
                 <MaterialCommunityIcons
                   name="piggy-bank-outline"
                   size={17}
-                  color={COLORS.brown}
+                  color={COLORS.primary}
+                  style={{
+                    backgroundColor: COLORS.grey,
+                    padding: 5,
+                    borderRadius: 50,
+                  }}
                 />
-                <MyText style={{flex: 1}} size={FONT_SIZE.sm} bold={FONT_WEIGHT.bold}>
+                <MyText
+                  style={{flex: 1}}
+                  size={FONT_SIZE.sm}
+                  bold={FONT_WEIGHT.bold}>
                   {item?.title}
                 </MyText>
                 <MyText size={FONT_SIZE.sm}>${item?.money}/400</MyText>
               </View>
-              <Progress.Bar
+              {/* <Progress.Bar
                 progress={item.progress}
                 width={null}
                 color={COLORS.primary}
                 unfilledColor={COLORS.grey}
                 borderColor={'transparent'}
-              />
+              /> */}
+             
+              <CustomProgressBar progress={item.progress} />
             </View>
           );
         }}

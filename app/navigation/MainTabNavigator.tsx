@@ -7,7 +7,6 @@ import ContentStack from './ContentStack';
 import CreateStack from './CreateStack';
 import SavingStack from './SavingsStack';
 import TransactionsStack from './TransactionsStack';
-
 // ICONS
 import Home from '../../assets/TabIcons/Home.svg';
 import Content from '../../assets/TabIcons/Content.svg';
@@ -103,6 +102,7 @@ const MainTabNavigator = () => {
           component={TransactionsStack}
         />
       </Tab.Navigator>
+            
     </>
   );
 };

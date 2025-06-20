@@ -21,7 +21,6 @@ import SavingGoalCard from './SavingGoalCard';
 import Recommendation from './Recommendation';
 import {SheetManager} from 'react-native-actions-sheet';
 import {SHEETS} from '../../sheets/sheets';
-import CardsIcon from '../../../assets/svg/CardsIcon.svg';
 import {getRandomColor} from '../../utils/helper';
 import {api_getUserProfile} from '../../api/profile';
 import {tokenSelector} from '../../redux/feature/auth/authSlice';
@@ -132,6 +131,8 @@ const HomeScreen = () => {
                   <AntDesign name="right" size={15} />
                 </TouchableOpacity>
               </View>
+
+
               <FlatList
                 contentContainerStyle={{paddingHorizontal: 15}}
                 horizontal
