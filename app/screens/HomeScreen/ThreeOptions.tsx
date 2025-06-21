@@ -6,41 +6,17 @@ import {COLORS, FONT_SIZE, FONT_WEIGHT} from '../../styles';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import CustomProgressBar from '../../components/CustomProgressbar';
 
-const remainingData = [
-  {title: 'Food', money: '190', progress: 0.4},
-  {title: 'Clothes', money: '300', progress: 0.7},
-  {title: 'Electricity', money: '235', progress: 0.6},
-  {title: 'Bills', money: '285', progress: 0.65},
-  {title: 'Vacation', money: '110', progress: 0.3},
-  {title: 'Phones', money: '250', progress: 0.55},
-];
+type ThreeOptionsProps = {
+  data: { title: string; money: string; progress: number }[];
+  view: number;
+  setView: React.Dispatch<React.SetStateAction<number>>;
+};
 
-const spentData = [
-  {title: 'Food', money: '210', progress: 0.6},
-  {title: 'Clothes', money: '100', progress: 0.2},
-  {title: 'Electricity', money: '165', progress: 0.4},
-  {title: 'Bills', money: '115', progress: 0.35},
-  {title: 'Vacation', money: '290', progress: 0.7},
-  {title: 'Phones', money: '150', progress: 0.35},
-];
-
-const projectedData = [
-  {title: 'Food', money: '250', progress: 0.8},
-  {title: 'Clothes', money: '200', progress: 0.5},
-  {title: 'Electricity', money: '200', progress: 0.5},
-  {title: 'Bills', money: '300', progress: 0.75},
-  {title: 'Vacation', money: '350', progress: 0.9},
-  {title: 'Phones', money: '300', progress: 0.75},
-];
-
-
-const ThreeOptions = () => {
-  const [view, setView] = useState(1);
-
-  let data = remainingData;
-  if (view === 2) data = spentData;
-  if (view === 3) data = projectedData;
-
+const ThreeOptions: React.FC<ThreeOptionsProps> = ({
+  data = [],
+  view = 1,
+  setView = (view: number) => {},
+}) => {
   return (
     <View style={{marginHorizontal: 20}}>
       <View style={styles.viewBtn}>

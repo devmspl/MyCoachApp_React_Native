@@ -64,8 +64,8 @@ const LoginView = () => {
     <View>
       <Formik
         initialValues={{
-          email: 'myuser@gmail.com',
-          password: 'myuser@123',
+          email: '',
+          password: '',
         }}
         validateOnMount={true}
         validationSchema={LoginSchema}

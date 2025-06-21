@@ -1,7 +1,13 @@
-import React, { useRef, useEffect, useState } from 'react';
-import { View, Animated, ViewStyle, LayoutChangeEvent } from 'react-native';
-import Svg, { Defs, Pattern, Rect, Line } from 'react-native-svg';
-import { COLORS } from '../styles';
+import React, {useRef, useEffect, useState} from 'react';
+import {
+  View,
+  Animated,
+  ViewStyle,
+  LayoutChangeEvent,
+  Platform,
+} from 'react-native';
+import Svg, {Defs, Pattern, Rect, Line} from 'react-native-svg';
+import {COLORS} from '../styles';
 
 interface CustomProgressBarProps {
   progress: number;
@@ -35,13 +41,11 @@ const CustomProgressBar: React.FC<CustomProgressBarProps> = ({
     setContainerWidth(e.nativeEvent.layout.width);
   };
 
-  // Calculate the width for the filled bar
   const filledWidth = animated.interpolate({
     inputRange: [0, 1],
     outputRange: [0, containerWidth],
   });
 
-  // Create striped pattern component
   const StripedBackground = () => (
     <Svg
       width={containerWidth}
@@ -61,7 +65,7 @@ const CustomProgressBar: React.FC<CustomProgressBarProps> = ({
           <Line
             x1="0"
             y1="0"
-            x2="0"
+            x2={Platform.OS === 'ios' ? '5' : '0'}
             y2="8"
             stroke={fillColor}
             strokeWidth="5"
@@ -95,7 +99,7 @@ const CustomProgressBar: React.FC<CustomProgressBarProps> = ({
       {containerWidth > 0 && (
         <>
           <StripedBackground />
-          
+
           <Animated.View
             style={{
               position: 'absolute',

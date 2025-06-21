@@ -23,23 +23,156 @@ import {SheetManager} from 'react-native-actions-sheet';
 import {SHEETS} from '../../sheets/sheets';
 import {getRandomColor} from '../../utils/helper';
 import {api_getUserProfile} from '../../api/profile';
-import {tokenSelector} from '../../redux/feature/auth/authSlice';
-import {store} from '../../redux';
-// import {Home} from '../../navigation/types';
+import { RootState } from '../../redux';
+
+const cashFlowDataMap = {
+  week: {
+    Food: { income: 300, expenses: 120 },
+    Clothes: { income: 200, expenses: 80 },
+    Electricity: { income: 150, expenses: 60 },
+    Bills: { income: 250, expenses: 100 },
+    Vacation: { income: 100, expenses: 40 },
+    Phones: { income: 180, expenses: 70 },
+    All: { income: 1500, expenses: 925 },
+  },
+  month: {
+    Food: { income: 1200, expenses: 480 },
+    Clothes: { income: 800, expenses: 320 },
+    Electricity: { income: 600, expenses: 240 },
+    Bills: { income: 1000, expenses: 400 },
+    Vacation: { income: 400, expenses: 160 },
+    Phones: { income: 720, expenses: 280 },
+    All: { income: 6200, expenses: 4300 },
+  },
+  year: {
+    Food: { income: 14400, expenses: 5760 },
+    Clothes: { income: 9600, expenses: 3840 },
+    Electricity: { income: 7200, expenses: 2880 },
+    Bills: { income: 12000, expenses: 4800 },
+    Vacation: { income: 4800, expenses: 1920 },
+    Phones: { income: 8640, expenses: 3360 },
+    All: { income: 73200, expenses: 59000 },
+  },
+  fiveYears: {
+    Food: { income: 72000, expenses: 28800 },
+    Clothes: { income: 48000, expenses: 19200 },
+    Electricity: { income: 36000, expenses: 14400 },
+    Bills: { income: 60000, expenses: 24000 },
+    Vacation: { income: 24000, expenses: 9600 },
+    Phones: { income: 43200, expenses: 16800 },
+    All: { income: 368000, expenses: 297000 },
+  },
+};
+
+type CategoryKey = 'Food' | 'Clothes' | 'Electricity' | 'Bills' | 'Vacation' | 'Phones' | 'All';
+
+function getPeriodKey(selectedPeriod: string): 'week' | 'month' | 'year' | 'fiveYears' {
+  if (selectedPeriod === 'Current month') return 'month';
+  if (selectedPeriod === 'This week') return 'week';
+  if (selectedPeriod === 'Last week') return 'week';
+  if (selectedPeriod === 'This year') return 'year';
+  if (selectedPeriod === '5 years') return 'fiveYears';
+  return 'week';
+}
+
+function getFilteredCashFlowData(period: string, category: string | null) {
+  const keys: Array<'week' | 'month' | 'year' | 'fiveYears'> = ['week', 'month', 'year', 'fiveYears'];
+  const result: Record<string, { income: number; expenses: number }> = {};
+  keys.forEach((k) => {
+    if (
+      category &&
+      (['Food', 'Clothes', 'Electricity', 'Bills', 'Vacation', 'Phones', 'All'] as const).includes(category as CategoryKey)
+    ) {
+      result[k] = cashFlowDataMap[k][category as CategoryKey];
+    } else {
+      result[k] = cashFlowDataMap[k].All;
+    }
+  });
+  return result as {
+    week: { income: number; expenses: number };
+    month: { income: number; expenses: number };
+    year: { income: number; expenses: number };
+    fiveYears: { income: number; expenses: number };
+  };
+}
+
+const remainingData = [
+  {title: 'Food', money: '190', progress: 0.4},
+  {title: 'Clothes', money: '300', progress: 0.7},
+  {title: 'Electricity', money: '235', progress: 0.6},
+  {title: 'Bills', money: '285', progress: 0.65},
+  {title: 'Vacation', money: '110', progress: 0.3},
+  {title: 'Phones', money: '250', progress: 0.55},
+];
+
+const spentData = [
+  {title: 'Food', money: '210', progress: 0.6},
+  {title: 'Clothes', money: '100', progress: 0.2},
+  {title: 'Electricity', money: '165', progress: 0.4},
+  {title: 'Bills', money: '115', progress: 0.35},
+  {title: 'Vacation', money: '290', progress: 0.7},
+  {title: 'Phones', money: '150', progress: 0.35},
+];
+
+const projectedData = [
+  {title: 'Food', money: '250', progress: 0.8},
+  {title: 'Clothes', money: '200', progress: 0.5},
+  {title: 'Electricity', money: '200', progress: 0.5},
+  {title: 'Bills', money: '300', progress: 0.75},
+  {title: 'Vacation', money: '350', progress: 0.9},
+  {title: 'Phones', money: '300', progress: 0.75},
+];
+
+const cashFlowData = {
+  week: {income: 1500, expenses: 925},
+  month: {income: 6200, expenses: 4300},
+  year: {income: 73200, expenses: 59000},
+  fiveYears: {income: 368000, expenses: 297000},
+};
 
 const HomeScreen = () => {
   const navigation =
     useNavigation<NativeStackNavigationProp<HomeStackParams>>();
   const [isBalanceVisible, setIsBalanceVisible] = React.useState(false);
   const [isLoading, setIsLoading] = React.useState(false);
-  // const user = store.getState().auth.user;
-
-  const [userData, setUserData] = useState<any>({});
-  const fullName = userData?.personal?.firstName
+  const [view, setView] = useState(1);
+  const [openFilter, setOpenFilter] = useState(false);
+  const [userData, setUserData] = useState<any>(null);
+    const fullName = userData?.personal?.firstName
     ? `${userData.personal.firstName} ${
         userData.personal.lastName ?? ''
       }`.trim()
     : null;
+
+  const filters = useSelector((state: RootState) => state.homeFilter);
+  const selectedRange = getPeriodKey(filters.selectedPeriod);
+
+  const filteredCashFlowData = getFilteredCashFlowData(filters.selectedPeriod, filters.selectedCategory);
+
+  function getPeriodKey(selectedPeriod: string): 'week' | 'month' | 'year' | 'fiveYears' {
+    if (selectedPeriod === 'Current month') return 'month';
+    if (selectedPeriod === 'This week') return 'week';
+    if (selectedPeriod === 'Last week') return 'week'; // adjust if you have data for last week
+    if (selectedPeriod === 'This year') return 'year';
+    if (selectedPeriod === '5 years') return 'fiveYears';
+    return 'week';
+  }
+
+  function filterThreeOptionsData(dataArr: any) {
+    let filtered = dataArr;
+    if (filters.selectedCategory) {
+      filtered = filtered.filter((item: any) =>
+        filters.selectedCategory &&
+        item.title.toLowerCase() === filters.selectedCategory.toLowerCase()
+      );
+    }
+    return filtered;
+  }
+
+  const dataSource =
+    view === 2 ? spentData : view === 3 ? projectedData : remainingData;
+
+  const data = filterThreeOptionsData(dataSource);
 
   const handleUserData = async () => {
     setIsLoading(true);
@@ -55,6 +188,10 @@ const HomeScreen = () => {
   React.useEffect(() => {
     handleUserData();
   }, []);
+
+  const onFilterClick = () => {
+    SheetManager.show('CashFlowActionSheet');
+  }
 
   return (
     <MainLayout>
@@ -108,12 +245,13 @@ const HomeScreen = () => {
                 </View>
               </View>
 
-              {/* {COMPONENTS} */}
-              <CashFlowCard />
-              <ThreeOptions />
-              {/* {} */}
+              <CashFlowCard
+                cashFlowData={filteredCashFlowData}
+                selectedRange={selectedRange}
+                onFilterClickCB={onFilterClick}
+              />
+              <ThreeOptions data={data} view={view} setView={setView} />
 
-              {/* {BUDGET SUGGESTIONS} */}
               <View
                 style={{
                   flexDirection: 'row',
@@ -131,7 +269,6 @@ const HomeScreen = () => {
                   <AntDesign name="right" size={15} />
                 </TouchableOpacity>
               </View>
-
 
               <FlatList
                 contentContainerStyle={{paddingHorizontal: 15}}
@@ -185,6 +322,7 @@ const HomeScreen = () => {
           );
         }}
       />
+     
     </MainLayout>
   );
 };

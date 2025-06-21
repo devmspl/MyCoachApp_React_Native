@@ -5,7 +5,7 @@ import postReducer from './feature/post/postSlice';
 import contentSlice from './feature/content/contentSlice';
 import storage from '@react-native-async-storage/async-storage';
 import {persistStore, persistReducer} from 'redux-persist';
-
+import homeFilterReducer from './feature/home/filterSlice';
 // Redux Persist configuration
 const persistConfig = {
   key: 'root',
@@ -18,6 +18,7 @@ const rootReducer = combineReducers({
   auth: authReducer,
   post: postReducer,
   content: contentSlice,
+  homeFilter: homeFilterReducer,
 });
 
 // Creating the persisted reducer
